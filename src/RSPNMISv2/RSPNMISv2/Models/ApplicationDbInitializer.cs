@@ -487,7 +487,7 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SWAT", Prov_Id = 1, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TANK", Prov_Id = 1, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "UPPER DIR", Prov_Id = 1, PROVINCE = "KPK" });
-
+//No change
             foreach (District s in defaultDistricts)
             {
                 context.Districts.Add(s);
