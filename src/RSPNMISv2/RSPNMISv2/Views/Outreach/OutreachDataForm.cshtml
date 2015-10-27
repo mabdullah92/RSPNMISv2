@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "OutReachDataForm";
+}
+
+<h2>Add Outreach Data</h2>
+@using RSPNMISv2.ViewModels
+@model dynamic
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainForm", enctype = "multipart/form-data" }))
+{
+    <select name="partnerOrganization">
+        <option>Select Partner Organization</option>
+        @foreach (var d in Model.PartnerOrganizations)
+        {
+            <option value="@d.ID">@d.Title</option>
+        }
+    </select><br />
+    <select name="district">
+        <option>Select District</option>
+        @foreach (var d in Model.Districts)
+        {
+            <option value="@d.Dist_Id$#@d.District_Name">@d.District_Name</option>
+        }
+    </select><br />
+    <input type="date" name="reportingDate" placeholder="Reporting Date" /><hr />
+    <div class="kpiValueDiv">
+        <select class="sel_indicator" name="indicator[]">
+            <option value="0">Select Indicator</option>
+            @foreach (var d in Model.Indicators)
+            {
+                <option value="@d.ID$#@d.IndicatorName$#@d.SubIndicatorName">@d.IndicatorName | @d.SubIndicatorName</option>
+            }
+        </select>
+
+        <input type="text" class="kpiValue" name="kpiValue[]" /> <hr />
+    </div>
+    <input type="submit" />
+}
+<h2>Approve and Submit</h2>
+@using (Html.BeginForm("submitData", null, FormMethod.Post, new { id = "submitForm", enctype = "multipart/form-data" }))
+{
+    <select name="partnerOrganizationID">
+        <option>Select Partner Organization</option>
+        @foreach (var d in Model.PartnerOrganizations)
+        {
+            <option value="@d.ID">@d.Title</option>
+        }
+    </select>
+    <input type="date" name="reportingDate" placeholder="Reporting Date" />
+    <input type="submit" />
+
+}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Indicator
+            </th>
+            <th>
+                Sub-Indicator
+            </th>
+            <th>
+                District
+            </th>
+            <th>
+                Values
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var d in Model.OutReachData)
+            {
+                <tr>
+                    <td>@d.IndicatorName</td>
+                    <td>@d.SubIndicatorName</td>
+                    <td>@d.DistrictName</td>
+                    <td>@d.Value</td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>

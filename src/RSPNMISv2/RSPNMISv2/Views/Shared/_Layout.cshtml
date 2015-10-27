@@ -45,7 +45,14 @@
     @RenderSection("scripts", required: false)
 
     <script>
-    $('table').dataTable();
+        $('table').dataTable();
+        $('body').on('keypress', '.kpiValue:last', function () {
+            $('.kpiValueDiv:last').clone().insertAfter('.kpiValueDiv:last');
+            var index =$(this).parent().find('.sel_indicator:last option:selected').index();
+            index = ++index;
+            $(".sel_indicator:last").prop('selectedIndex', index);
+        });
     </script>
+
 </body>
 </html>

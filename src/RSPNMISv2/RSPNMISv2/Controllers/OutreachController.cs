@@ -21,6 +21,23 @@ namespace RSPNMISv2.Controllers
 
             return PartnerOrganizations;
         }
+        // GET Districts
+        public List<District> getDistricts()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<District> Districts = db.Districts.ToList();
+
+            return Districts;
+        }
+
+        // GET Indicators
+        public List<Indicator> getIndicators()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Indicator> Indicators = db.Indicators.ToList();
+
+            return Indicators;
+        }
 
         // GET: Outreach
 
@@ -55,8 +72,8 @@ namespace RSPNMISv2.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
 
             //Get Indicators and Districts
-            List<Indicator> Indicators = db.Indicators.ToList();
-            List<District> Districts = db.Districts.ToList();
+            List<Indicator> Indicators = getIndicators();
+            List<District> Districts = getDistricts();
             List<Indicator> Indicator;
             List<District> District;
 
@@ -142,13 +159,56 @@ namespace RSPNMISv2.Controllers
             }
 
             OutreachCache.RemoveUserData(User.Identity.Name);
-            return RedirectToAction("DataUpload");
+             //var controller = Request.UrlReferrer.Segments.Skip(1).Take(1).SingleOrDefault() ?? "Home").Trim('/'); 
+            // Home is default controller
+
+            var action = (Request.UrlReferrer.Segments.Skip(2).Take(1).SingleOrDefault() ?? "Index").Trim('/');
+            return RedirectToAction(action);
         }
         [HttpPost]
         public ActionResult EmptyUserCache()
         {
             OutreachCache.RemoveUserData(User.Identity.Name);
             return RedirectToAction("DataUpload");
+        }
+
+        public ActionResult OutreachDataForm()
+        {
+            dynamic viewModel = new ExpandoObject();
+            viewModel.PartnerOrganizations = getPartnerOrganizations();
+            viewModel.Districts = getDistricts();
+            viewModel.Indicators = getIndicators();
+            viewModel.OutReachData = OutreachCache.GetAll();
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult OutreachDataForm(int partnerOrganization, string district, DateTime reportingDate, List<string> indicator, List<decimal> kpiValue)
+        {
+            OutreachCache.RemoveUserData(User.Identity.Name);
+            string[] districtInfo = district.Split(new[] { "$#" }, StringSplitOptions.None);
+          
+
+            OutreachImportViewModel vm = new OutreachImportViewModel();
+            vm.Dist_Id =Convert.ToInt32(districtInfo[0]);
+            vm.DistrictName = districtInfo[1];
+            vm.ReportingDate = reportingDate;
+            int i = 0;
+            foreach(string d in indicator){
+                string[] indicatorInfo = d.Split(new[] { "$#" }, StringSplitOptions.None);
+                vm.IndicatorID = Convert.ToInt32(indicatorInfo[0]);
+                vm.IndicatorName = indicatorInfo[1];
+                vm.SubIndicatorName = indicatorInfo[2];
+                vm.Value = kpiValue[i];
+                ++i;
+                OutreachCache.Add(User.Identity.Name, vm);
+            }
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.PartnerOrganizations = getPartnerOrganizations();
+            viewModel.Districts = getDistricts();
+            viewModel.Indicators = getIndicators();
+            viewModel.OutReachData = OutreachCache.GetAll();
+            return View(viewModel);
         }
     }
 }
