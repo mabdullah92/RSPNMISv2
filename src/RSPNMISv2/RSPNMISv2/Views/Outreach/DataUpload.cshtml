@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Upload RSP Outreach Data";
+}
+
+<h2>Upload Data (.xlsx)</h2>
+
+@using RSPNMISv2.ViewModels
+@model dynamic
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainForm", enctype = "multipart/form-data" }))
+{
+    <input type="file" name="rspFile" />
+    <input type="submit" />
+}
+<h2>Remove file Data</h2>
+@using (Html.BeginForm("emptyUserCache", null, FormMethod.Post, new { id = "EmptyUserCacheForm", enctype = "multipart/form-data" }))
+{
+    <input type="submit" />
+}
+<h2>Approve and Submit</h2>
+@using (Html.BeginForm("submitData", null, FormMethod.Post, new { id = "submitForm", enctype = "multipart/form-data" }))
+{
+    <select name="partnerOrganizationID">
+        <option>Select Partner Organization</option>
+        @foreach (var d in Model.PartnerOrganizations)
+        {
+            <option value="@d.ID">@d.Title</option>
+        }
+    </select>
+    <input type="date" name="reportingDate" placeholder="Reporting Date" />
+    <input type="submit" />
+
+}
+<h2>Uploaded data</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Indicator
+            </th>
+            <th>
+                Sub-Indicator
+            </th>
+            <th>
+                District
+            </th>
+            <th>
+                Values
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var d in Model.OutReachData)
+            {
+                <tr>
+                    <td>@d.IndicatorName</td>
+                    <td>@d.SubIndicatorName</td>
+                    <td>@d.DistrictName</td>
+                    <td>@d.Value</td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>

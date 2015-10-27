@@ -153,6 +153,7 @@ namespace RSPNMISv2.Models
         [ForeignKey("UC")]
         public Nullable<int> UC_Id { set; get; }
         public virtual UC UC { set; get; }
+
         public DateTime DateCreated { set; get; }
         [Required]
         [StringLength(250)]
@@ -161,6 +162,10 @@ namespace RSPNMISv2.Models
         [Required]
         [StringLength(250)]
         public string ModifiedBy { set; get; }
+
+        [ForeignKey("PartnerOrganization")]
+        public int PartnerOrganizationID { set; get; }
+        public virtual PartnerOrganization PartnerOrganization { set; get; }
 
     }
 }

@@ -21,6 +21,10 @@ D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Owin.Secu
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Web.Infrastructure.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Newtonsoft.Json.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Owin.dll
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\ServiceStack.Common.dll
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\ServiceStack.Interfaces.dll
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\ServiceStack.Redis.dll
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\ServiceStack.Text.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Net.Http.Formatting.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Web.Helpers.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Web.Http.dll
@@ -33,6 +37,9 @@ D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Web.WebPages
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Web.WebPages.Razor.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\WebGrease.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\EPPlus.xml
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\ServiceStack.Common.xml
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\ServiceStack.Redis.xml
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\ServiceStack.Text.xml
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Web.Helpers.xml
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Web.Mvc.xml
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\System.Web.Optimization.xml
@@ -61,3 +68,4 @@ D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Owin.Secu
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.pdb
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.csprojResolveAssemblyReference.cache

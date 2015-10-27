@@ -82,15 +82,19 @@ namespace RSPNMISv2.Controllers
                                 {
                                     string indicatorName = workSheet.Cells[row, 1].Text;
                                     string subIndicatorName = workSheet.Cells[row, 2].Text;
+
                                     //Get Indicator Id
                                     IQueryable<Indicator> Indicators = db.Indicators.Where(x => (x.IndicatorName == indicatorName) && (x.SubIndicatorName == subIndicatorName));                          
                                     Indicator[] IndicatorsArray = Indicators.ToArray();
                                     o.IndicatorID = IndicatorsArray[0].ID;
+
                                     //Get District Id
                                     string districtName = workSheet.Cells[row, 4].Text;
                                     IQueryable<District> Districts = db.Districts.Where(x => x.District_Name == districtName);
                                     District[] DistrictsArray = Districts.ToArray();
                                     o.Dist_Id = DistrictsArray[0].Dist_Id;
+
+                                    //Get Value from work sheet
                                     o.Value = Decimal.Parse(workSheet.Cells[row, 3].Text);
                                 }
                                 else
