@@ -39,6 +39,8 @@ namespace RSPNMISv2.Models
         public DbSet<District> Districts { set; get; }
         public DbSet<UC> UCs { set; get; }
         public DbSet<RSPOutreach> RSPOutreachs { set; get; }
+        public DbSet<PO_District> PO_Districts { set; get; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Using Fluent API for fine control
@@ -62,6 +64,7 @@ namespace RSPNMISv2.Models
         [Key]
         [Required]
         public int ID { set; get; }
+        public int PartnerOrganizationType_ID { set; get; }
         [StringLength(250)]
         public string Abbr { set; get; }
         [StringLength(250)]
@@ -167,5 +170,34 @@ namespace RSPNMISv2.Models
         public int PartnerOrganizationID { set; get; }
         public virtual PartnerOrganization PartnerOrganization { set; get; }
 
+    }
+
+    public class Province
+    {
+        [StringLength(250)]
+        public string PROVINCE { set; get; }
+
+        [Key]
+        [Display(Name = "ID")]
+        public Nullable<int> Prov_Id { set; get; }
+
+        [StringLength(250)]
+        public string Country { set; get; }
+    }
+
+    public class PO_District
+    {
+
+        [Key]
+        [Display(Name = "ID")]
+        public Nullable<int> ID { set; get; }
+
+        [ForeignKey("PartnerOrganization")]
+        public int PartnerOrganizationID { set; get; }
+        public virtual PartnerOrganization PartnerOrganization { set; get; }
+
+        [ForeignKey("District")]
+        public int Dist_Id { set; get; }
+        public virtual District District { set; get; }
     }
 }

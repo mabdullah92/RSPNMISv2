@@ -4,55 +4,252 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - RSPN MIS</title>
-    @Styles.Render("~/Content/css")
+    @*@Styles.Render("~/Content/css")*@
+    @Styles.Render("~/Content/theme")
     @Styles.Render("~/Content/dataTable")
-    @Scripts.Render("~/bundles/modernizr")
+
+
 
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<body class="nav-md">
+    <div class="container body">
+
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>RSPN</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu prile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src="~/Content/Images/img.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>Current User</h2>
+                        </div>
+                    </div>
+                    <!-- /menu prile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Management Information</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-users"></i> System Administration <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li>
+                                            @Html.ActionLink("Partner Organizations", "PartnerOrganizations", "Administration")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Sectors", "Sectors", "Administration")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Districts", "Districts", "Administration")
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-bar-chart-o"></i>Project Management <span class="fa fa-chevron-down"></span></a>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-database"></i> RSP Outreach Data <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li>
+                                            @Html.ActionLink("Upload Monthly Outreach Data", "DataForm", "Outreach")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Upload Excel File", "DataUpload", "Outreach")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Reports", "Reports", "Outreach")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Indicators", "Indicators", "Outreach")
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-home"></i> Task Management <span class="fa fa-chevron-down"></span></a>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-briefcase"></i> Field Monitoring <span class="fa fa-chevron-down"></span></a>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-line-chart"></i> Activity Progress <span class="fa fa-chevron-down"></span></a>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-building-o"></i> Report Collections <span class="fa fa-chevron-down"></span></a>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Geographic Information </h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-globe"></i> GIS <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li>
+                                            <a href="#">RSPN Projects</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">RSP's Outreach</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav class="" role="navigation">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/Content/Images/img.jpg" alt="">
+                                    <span class=" fa fa-angle-down"></span>
+                                  
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+                                    <li>
+                                        <a href="javascript:;">  Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <!-- <span class="badge bg-red pull-right">50%</span> -->
+                                            <span>Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">Help</a>
+                                    </li>
+                                    <li>
+                                        <a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                     
+                        </ul>
+                    </nav>
+                </div>
             </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                @RenderBody()
+
+                <footer>
+                    <div class="">
+                        <p class="pull-right">
+                            @Html.Partial("_LoginPartial")   RSPN MIS Developed and Maintained by<a href="http://www.rspn.org"> RSPN </a>. |
+                            <span class="lead"> <i class="fa fa-paw"></i> RSPN!</span>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+
+            </div>
+            <!-- /page content -->
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - RSPN</p>
-        </footer>
+    <div id="custom_notifications" class="custom-notifications dsp_none">
+        <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group"></ul>
+        <div class="clearfix"></div>
+        <div id="notif-group" class="tabbed_notifications"></div>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/theme")
+    @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dataTable")
     @RenderSection("scripts", required: false)
-
     <script>
         $('table').dataTable();
-        $('body').on('keypress', '.kpiValue:last', function () {
-            $('.kpiValueDiv:last').clone().insertAfter('.kpiValueDiv:last');
-            var index =$(this).parent().find('.sel_indicator:last option:selected').index();
-            index = ++index;
-            $(".sel_indicator:last").prop('selectedIndex', index);
-        });
+jQuery(document).ready(function($) {
+    $('#undo_redo').multiselect();
+});
     </script>
-
 </body>
 </html>
+<!-- /footer content -->
+@*<body>
+                        <div class="navbar navbar-inverse navbar-fixed-top">
+                            <div class="container">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                                </div>
+                                <div class="navbar-collapse collapse">
+                                    <ul class="nav navbar-nav">
+                                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                    </ul>
+                                    @Html.Partial("_LoginPartial")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container body-content">
+                            @RenderBody()
+                            <hr />
+                            <footer>
+                                <p>&copy; @DateTime.Now.Year - RSPN</p>
+                            </footer>
+                        </div>
+
+                        @Scripts.Render("~/bundles/modernizr")
+                        @Scripts.Render("~/bundles/theme")
+                        @Scripts.Render("~/bundles/jquery")
+                        @Scripts.Render("~/bundles/bootstrap")
+                        @Scripts.Render("~/bundles/dataTable")
+                        @RenderSection("scripts", required: false)
+
+                        <script>
+                            $('table').dataTable();
+                            //$('body').on('keypress', '.kpiValue:last', function () {
+                            //    $('.kpiValueDiv:last').clone().insertAfter('.kpiValueDiv:last');
+                            //    var index =$(this).parent().find('.sel_indicator:last option:selected').index();
+                            //    index = ++index;
+                            //    $(".sel_indicator:last").prop('selectedIndex', index);
+                            //});
+                        </script>
+
+                    </body>
+    </html>*@

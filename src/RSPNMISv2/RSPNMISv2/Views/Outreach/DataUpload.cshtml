@@ -2,68 +2,169 @@
     ViewBag.Title = "Upload RSP Outreach Data";
 }
 
-<h2>Upload Data (.xlsx)</h2>
-
 @using RSPNMISv2.ViewModels
 @model dynamic
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainForm", enctype = "multipart/form-data" }))
-{
-    <input type="file" name="rspFile" />
-    <input type="submit" />
-}
-<h2>Remove file Data</h2>
-@using (Html.BeginForm("emptyUserCache", null, FormMethod.Post, new { id = "EmptyUserCacheForm", enctype = "multipart/form-data" }))
-{
-    <input type="submit" />
-}
-<h2>Approve and Submit</h2>
-@using (Html.BeginForm("submitData", null, FormMethod.Post, new { id = "submitForm", enctype = "multipart/form-data" }))
-{
-    <select name="partnerOrganizationID">
-        <option>Select Partner Organization</option>
-        @foreach (var d in Model.PartnerOrganizations)
-        {
-            <option value="@d.ID">@d.Title</option>
-        }
-    </select>
-    <input type="date" name="reportingDate" placeholder="Reporting Date" />
-    <input type="submit" />
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Upload Data <small>Format (.xlsx) </small></h2>
 
-}
-<h2>Uploaded data</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainForm", enctype = "multipart/form-data" }))
+                {
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                Indicator
-            </th>
-            <th>
-                Sub-Indicator
-            </th>
-            <th>
-                District
-            </th>
-            <th>
-                Values
-            </th>
-        </tr>
-    </thead>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            <h2> Upload File</h2>
+                        </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="file" name="rspFile" />
+                        </div>
+                    </div>
+    <br /><br /><br />
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
 
-    <tbody>
-        @if (Model != null)
-        {
-            foreach (var d in Model.OutReachData)
-            {
-                <tr>
-                    <td>@d.IndicatorName</td>
-                    <td>@d.SubIndicatorName</td>
-                    <td>@d.DistrictName</td>
-                    <td>@d.Value</td>
-                </tr>
-            }
-        }
-    </tbody>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
 
-</table>
+                <hr />
+                @using (Html.BeginForm("emptyUserCache", null, FormMethod.Post, new { id = "EmptyUserCacheForm", enctype = "multipart/form-data" }))
+                {
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            <h2>Remove file Data</h2>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="submit" class="btn btn-warning" value="Clear Uploaded Data" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>KPI Values for Review <small></small></h2>
+             
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table id="example" class="table table-striped responsive-utilities jambo_table">
+                    <thead>
+                        <tr class="headings">
+                            <th>
+                                Indicator
+                            </th>
+                            <th>
+                                Sub-Indicator
+                            </th>
+                            <th>
+                                District
+                            </th>
+                            <th>
+                                Values
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var d in Model.OutReachData)
+                            {
+                                <tr class="even pointer">
+                                    <td class="a-center ">
+                                        @d.IndicatorName
+                                    </td>
+                                    <td class="a-center ">
+                                        @d.SubIndicatorName
+                                    </td>
+                                    <td class="a-center ">
+                                        @d.DistrictName
+                                    </td>
+                                    <td class="a-center ">
+                                        @d.Value
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Review and Submit <small>--</small></h2>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm("submitData", null, FormMethod.Post, new { id = "submitForm", enctype = "multipart/form-data" }))
+                {
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Select Partner Organization <span class="required">*</span>
+                        </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <select name="partnerOrganizationID" class="form-control">
+                                <option>Select Partner Organization</option>
+                                @foreach (var d in Model.PartnerOrganizations)
+                                {
+                                    <option value="@d.ID">@d.Title</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+    <br /><br /><br />
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Reporting Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="date" class="form-control" name="reportingDate" placeholder="Reporting Date" />
+                        </div>
+                    </div>
+    <br /><br /><br />
+                    <div class="form-group">
+                       
+                        <div class="col-md-offset-3 col-md-6 col-sm-6 col-xs-12">
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
