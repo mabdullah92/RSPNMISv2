@@ -1,0 +1,209 @@
+﻿@{
+    ViewBag.Title = "GIS Outreach Data";
+}
+
+
+@model dynamic
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>RSP's Outreach Map</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+                <div class="col-sm-8">
+                    <div id="map" style="width: 900px;height: 900px;"></div>
+                </div>
+                <div class="col-sm-4">
+                    <br><br><br><br><br><br>
+                    <h2 class="aa" style="display:none">Key Performance Indicators in <b id="district"></b></h2>
+
+                    <table class="table table-striped responsive-utilities jambo_table aa" style="display:none">
+                        <thead>
+                             <tr class="even pointer">
+                                <th width="200px"> Indicator </th>
+                                <th width="90px"> Sub Indicator </th>
+                                <th width="50px"> Value </th>
+                            </tr>
+                        </thead>
+                        <tbody id="kpiData"></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+   
+    <script src="@Url.Content("~/Content/maps/districts.geojson")"></script>
+    <script src="http://code.highcharts.com/maps/highmaps.js" )"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
+    <script type="text/javascript">
+
+        function getKpiData(districtName) {
+
+            $.ajax({
+                url: ' @Url.Action("GisKpis", "DataService")',
+                data: { 'districtName': districtName },
+                type: "post",
+                cache: false,
+                success: function (content) {
+                    $('#district').html(content[0].DistrictName);
+                    var html = "";
+                    var value;
+                    content.forEach(function (entry) {
+                         value = entry.value ? entry.value : "N/A";
+                        html += "<tr><td>" + entry.indicatorName + "</td><td>" + entry.subIndicatorName + "</td><td>" + value + "</td></tr>"
+                     //   console.log(entry);
+                    });
+                    $(".aa").removeAttr("style");
+                    $('#kpiData').html(html);
+                  
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log("failed");
+                }
+            });
+
+        }
+
+        var geojson = data;
+        var series = [
+
+                {
+                    allAreas: true,
+                    mapData: geojson,
+                    color: '#000000',
+                    showInLegend: false,
+                },
+                   @foreach (var p in Model.RspDistricts)
+        {
+
+            <text>
+
+               {
+                   allAreas: false,
+                   name: '@p.Rsp',
+                   zIndex: 10,
+                   color: '@p.ColorCode',
+                   data: $.map(['@Html.Raw(p.DistrictsNames)'], function (code) {
+                       return { code: code };
+                   })
+               },
+
+           </text>
+        }
+
+
+        ]
+
+        $(document).ready(function () {
+            var a = $('#map').highcharts('Map', {
+                title: {
+                    text: 'Rural Support Programmes Network'
+                },
+                exporting: {
+                    chartOptions: { // specific options for the exported image
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+
+                            },
+
+                        }
+                    },
+                    scale: 3,
+                    fallbackToExportServer: false
+                },
+                subtitle: {
+                    text: 'RSP \'s Outreach'
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    enableDoubleClickZoomTo: true
+                },
+                legend: {
+                    enabled: true
+                },
+                type: "map",
+
+                series: series,
+                plotOptions: {
+                    series: {
+                        point: {
+                            events: {
+                                click: function () {
+                                    getKpiData(this.code);
+                                }
+                            }
+                        }
+                    },
+                    map: {
+
+                        zIndex: 1,
+                        joinBy: ['District', 'code'],
+                        dataLabels: {
+                            enabled: true,
+                            color: 'black',
+                            formatter: function () {
+
+                                if (this.point.code) {
+                                    return this.point.code;
+                                }
+                            },
+                            format: null,
+                            style: {
+                                fontWeight: 'bold'
+                            }
+                        },
+                        mapData: geojson,
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: 'District : {point.code}<br>RSP : <b>{series.name}</b><br>'
+                        }
+
+                    }
+                },
+
+
+
+
+            });
+
+        });
+
+
+    </script>
+}

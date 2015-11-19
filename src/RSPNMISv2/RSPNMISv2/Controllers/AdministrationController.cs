@@ -53,7 +53,8 @@ namespace RSPNMISv2.Controllers
 
             PO_District o = new PO_District();
             o.PartnerOrganizationID = poType;
-            foreach (int i in to) {
+            foreach (int i in to)
+            {
                 o.Dist_Id = i;
                 db.PO_Districts.Add(o);
                 db.SaveChanges();
@@ -62,6 +63,8 @@ namespace RSPNMISv2.Controllers
             var action = (Request.UrlReferrer.Segments.Skip(2).Take(1).SingleOrDefault() ?? "Index").Trim('/');
             return RedirectToAction(action);
         }
+
+     
 
     }
 }

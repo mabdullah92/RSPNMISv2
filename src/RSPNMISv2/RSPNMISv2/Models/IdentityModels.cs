@@ -40,6 +40,7 @@ namespace RSPNMISv2.Models
         public DbSet<UC> UCs { set; get; }
         public DbSet<RSPOutreach> RSPOutreachs { set; get; }
         public DbSet<PO_District> PO_Districts { set; get; }
+        public DbSet<Province> Provinces { set; get; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -83,6 +84,7 @@ namespace RSPNMISv2.Models
         {
             OrderIndex = 1000;
             IsActive = true;
+            IsCumulative = false;
         }
         [Key]
         [Display(Name = "ID")]
@@ -102,6 +104,9 @@ namespace RSPNMISv2.Models
         [Required]
         [StringLength(250)]
         public string ModifiedBy { set; get; }
+
+        public bool IsCumulative { set; get; } // true if RSP Sends data cumulatively without Districts
+        public bool showVarianceInReports { set; get; } // if Variance is needed in Report
 
     }
     public class District
@@ -140,6 +145,12 @@ namespace RSPNMISv2.Models
     }
     public class RSPOutreach
     {
+        public RSPOutreach()
+        {
+            IsCumulative = false;
+        }
+
+
         [Key]
         [Display(Name = "ID")]
         public int ID { set; get; }
@@ -149,8 +160,8 @@ namespace RSPNMISv2.Models
         public Nullable<DateTime> ReportingDate { set; get; }
         public Nullable<decimal> Value { set; get; }
 
-        [ForeignKey("District")]
-        public int Dist_Id { set; get; }
+        [ForeignKey("District")] //This column is null-able since RSPs may send data cumulatively for all Districts
+        public Nullable<int> Dist_Id { set; get; }
         public virtual District District { set; get; }
 
         [ForeignKey("UC")]
@@ -170,6 +181,9 @@ namespace RSPNMISv2.Models
         public int PartnerOrganizationID { set; get; }
         public virtual PartnerOrganization PartnerOrganization { set; get; }
 
+        public bool IsCumulative { set; get; } // true if RSP Sends data cumulatively without Districts
+      
+        
     }
 
     public class Province
@@ -179,7 +193,7 @@ namespace RSPNMISv2.Models
 
         [Key]
         [Display(Name = "ID")]
-        public Nullable<int> Prov_Id { set; get; }
+        public int Prov_Id { set; get; }
 
         [StringLength(250)]
         public string Country { set; get; }
@@ -190,7 +204,7 @@ namespace RSPNMISv2.Models
 
         [Key]
         [Display(Name = "ID")]
-        public Nullable<int> ID { set; get; }
+        public int ID { set; get; }
 
         [ForeignKey("PartnerOrganization")]
         public int PartnerOrganizationID { set; get; }
@@ -200,4 +214,7 @@ namespace RSPNMISv2.Models
         public int Dist_Id { set; get; }
         public virtual District District { set; get; }
     }
+
+  
+
 }

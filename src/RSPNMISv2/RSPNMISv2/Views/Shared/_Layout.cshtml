@@ -19,7 +19,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>RSPN</span></a>
+                        <a href="@Url.Action("Index","Home") " class=" site_title"><i class="fa fa-database"></i> <span>RSPN</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu prile quick info -->
@@ -51,6 +51,7 @@
                                         <li>
                                             @Html.ActionLink("Districts", "Districts", "Administration")
                                         </li>
+
                                     </ul>
                                 </li>
                                 <li>
@@ -102,7 +103,7 @@
                                             <a href="#">RSPN Projects</a>
                                         </li>
                                         <li>
-                                            <a href="#">RSP's Outreach</a>
+                                            @Html.ActionLink("RSP's Outreach", "Index", "Gis")
                                         </li>
 
                                     </ul>
@@ -141,7 +142,7 @@
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <img src="~/Content/Images/img.jpg" alt="">
                                     <span class=" fa fa-angle-down"></span>
-                                  
+
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
                                     <li>
@@ -161,7 +162,7 @@
                                     </li>
                                 </ul>
                             </li>
-                     
+
                         </ul>
                     </nav>
                 </div>
@@ -196,60 +197,5 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dataTable")
     @RenderSection("scripts", required: false)
-    <script>
-        $('table').dataTable();
-jQuery(document).ready(function($) {
-    $('#undo_redo').multiselect();
-});
-    </script>
 </body>
 </html>
-<!-- /footer content -->
-@*<body>
-                        <div class="navbar navbar-inverse navbar-fixed-top">
-                            <div class="container">
-                                <div class="navbar-header">
-                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                    </button>
-                                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                                </div>
-                                <div class="navbar-collapse collapse">
-                                    <ul class="nav navbar-nav">
-                                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                                    </ul>
-                                    @Html.Partial("_LoginPartial")
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container body-content">
-                            @RenderBody()
-                            <hr />
-                            <footer>
-                                <p>&copy; @DateTime.Now.Year - RSPN</p>
-                            </footer>
-                        </div>
-
-                        @Scripts.Render("~/bundles/modernizr")
-                        @Scripts.Render("~/bundles/theme")
-                        @Scripts.Render("~/bundles/jquery")
-                        @Scripts.Render("~/bundles/bootstrap")
-                        @Scripts.Render("~/bundles/dataTable")
-                        @RenderSection("scripts", required: false)
-
-                        <script>
-                            $('table').dataTable();
-                            //$('body').on('keypress', '.kpiValue:last', function () {
-                            //    $('.kpiValueDiv:last').clone().insertAfter('.kpiValueDiv:last');
-                            //    var index =$(this).parent().find('.sel_indicator:last option:selected').index();
-                            //    index = ++index;
-                            //    $(".sel_indicator:last").prop('selectedIndex', index);
-                            //});
-                        </script>
-
-                    </body>
-    </html>*@

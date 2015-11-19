@@ -188,6 +188,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
+    <Compile Include="Controllers\DataServiceController.cs" />
+    <Compile Include="Controllers\GisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OutreachController.cs" />
@@ -197,6 +199,11 @@
     <Compile Include="Helpers\DbHelpers.cs" />
     <Compile Include="Helpers\OutreachCache.cs" />
     <Compile Include="Helpers\Utility.cs" />
+    <Compile Include="Migrations\201511160656407_Initial.cs" />
+    <Compile Include="Migrations\201511160656407_Initial.Designer.cs">
+      <DependentUpon>201511160656407_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbInitializer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -207,8 +214,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\css\select\select2.min.css" />
+    <Content Include="Content\css\switchery\switchery.min.css" />
     <Content Include="Content\style.css" />
-    <Content Include="Controllers\bootstrap.min.css" />
+    <Content Include="App_Data\bootstrap.min.css" />
     <Content Include="Content\css\animate.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\custom.css" />
@@ -451,6 +460,9 @@
     <Content Include="Content\fonts\scss\_variables.scss" />
     <Content Include="Content\fonts\scss\font-awesome.scss" />
     <Content Include="Content\fonts\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\maps\districts.geojson" />
+    <Content Include="App_Data\uploads\book2.xlsx" />
+    <Content Include="App_Data\uploads\Book3.xlsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -509,6 +521,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
     <Content Include="Scripts\js\custom.js" />
+    <Content Include="Scripts\js\datepicker\daterangepicker.js" />
     <Content Include="Scripts\js\icheck\icheck.min.js" />
     <Content Include="Scripts\js\jquery.min.js" />
     <Content Include="Scripts\js\moment.min.js" />
@@ -516,6 +529,8 @@
     <Content Include="Scripts\js\multiselect.min.js" />
     <Content Include="Scripts\js\nicescroll\jquery.nicescroll.min.js" />
     <Content Include="Scripts\js\nprogress.js" />
+    <Content Include="Scripts\js\select\select2.full.js" />
+    <Content Include="Scripts\js\switchery\switchery.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -564,10 +579,12 @@
     <Content Include="Views\Administration\Sectors.cshtml" />
     <Content Include="Views\Outreach\Reports.cshtml" />
     <Content Include="Views\Administration\_PoDistrictsPartial.cshtml" />
+    <Content Include="Views\Gis\Index.cshtml" />
+    <Content Include="Views\DataService\Index.cshtml" />
+    <Content Include="Views\Outreach\TransposedUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Reports\" />
-    <Folder Include="App_Data\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -575,6 +592,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511160656407_Initial.resx">
+      <DependentUpon>201511160656407_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

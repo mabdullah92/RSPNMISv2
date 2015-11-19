@@ -66,6 +66,8 @@ D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Owin.Secu
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Owin.Security.Google.xml
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.csprojResolveAssemblyReference.cache
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.Migrations.Initial.resources
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.csproj.GenerateResource.Cache
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.pdb
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.csprojResolveAssemblyReference.cache

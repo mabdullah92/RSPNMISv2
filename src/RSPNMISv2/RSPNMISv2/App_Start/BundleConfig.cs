@@ -29,8 +29,11 @@ namespace RSPNMISv2
                    "~/Scripts/js/bootstrap.min.js",
                    "~/Scripts/js/nicescroll/jquery.nicescroll.min.js",
                    "~/Scripts/js/icheck/icheck.min.js",
+                   "~/Scripts/js/switchery/switchery.min.js",
+                   "~/Scripts/js/select/select2.full.js",
                    "~/Scripts/js/moment.min.js",
                    "~/Scripts/js/multiselect.min.js",
+                   "~/Scripts/js/datepicker/daterangepicker.js",
                    "~/Scripts/js/custom.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -38,13 +41,22 @@ namespace RSPNMISv2
             bundles.Add(new StyleBundle("~/Content/dataTable").Include(
                     "~/Content/css/datatables/tools/css/dataTables.tableTools.css"));
             bundles.Add(new StyleBundle("~/Content/theme").Include(
+                  "~/Content/css/select/select2.min.css",
                   "~/Content/css/bootstrap.min.css",
                    "~/fonts/css/font-awesome.min.css",
                   "~/Content/css/animate.min.css",
                   "~/Content/css/custom.css",
                   "~/Content/css/normalize.css",
                   "~/Content/style.css",
+                  "~/Content/css/switchery/switchery.min.css",
                   "~/Content/css/icheck/flat/green.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/HighCharts", "https://code.highcharts.com/highcharts.js").Include("~/Scripts/{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/HighMaps", "http://code.highcharts.com/maps/highmaps.js").Include("~/Scripts/{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Exporting", "https://code.highcharts.com/modules/exporting.js").Include("~/Scripts/{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/HighCharts3d", "http://code.highcharts.com/highcharts-3d.js").Include("~/Scripts/{version}.js"));
+            bundles.UseCdn = true;
+           // BundleTable.EnableOptimizations = true;
         }
 
     }

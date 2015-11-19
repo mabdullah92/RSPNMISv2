@@ -35,7 +35,8 @@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content" style="display: none;">
+                <div class="x_content">
+
                     @using (Html.BeginForm("submitData", null, FormMethod.Post, new { id = "submitForm", @class = "form-horizontal form-label-left", enctype = "multipart/form-data" }))
                     {
 
@@ -44,37 +45,58 @@
                                 Select Partner Organization <span class="required">*</span>
                             </label>
                             <div class="col-md-3 col-sm-6 col-xs-12">
-                                <select name="partnerOrganization" class="form-control">
+                                <select name="partnerOrganization" class="form-control select2_single">
                                     <option>Select Partner Organization</option>
                                     @foreach (var d in Model.PartnerOrganizations)
                                     {
-                                    <option value="@d.ID">@d.Title</option>
+                                        <option value="@d.ID">@d.Title</option>
                                     }
                                 </select>
                             </div>
                         </div>
+
+                        <br />
+                        <br />
+
                         <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                District Wise Report <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                <input type="checkbox" class="js-switch" onchange="showHideDistrict();" checked />
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group sel_district">
+
+                            <br />
+                            <br />
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                                 Select District <span class="required">*</span>
                             </label>
                             <div class="col-md-3 col-sm-6 col-xs-12">
 
-                                <select name="district" class="form-control">
+                                <select name="district" class="form-control select2_single">
                                     <option>Select District</option>
                                     @foreach (var d in Model.Districts)
                                     {
-                                    <option value="@d.Dist_Id$#@d.District_Name">@d.District_Name</option>
+                                        <option value="@d.Dist_Id$#@d.District_Name">@d.District_Name</option>
                                     }
                                 </select>
                             </div>
 
                         </div>
+                        <br />
+                        <br />
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                                 Reporting Date <span class="required">*</span>
                             </label>
                             <div class="col-md-3 col-sm-6 col-xs-12">
-                                <input type="date" class="form-control" name="reportingDate" placeholder="Reporting Date" />
+                                <input type="text" class="form-control datePicker" name="reportingDate" placeholder="Reporting Date" />
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -141,7 +163,7 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>KPI Values for Review <small></small></h2>
-             
+
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -201,7 +223,7 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>Review and Submit <small></small></h2>
-    
+
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -213,11 +235,11 @@
                             Select Partner Organization <span class="required">*</span>
                         </label>
                         <div class="col-md-3 col-sm-6 col-xs-12">
-                            <select name="partnerOrganizationID" class="form-control">
+                            <select name="partnerOrganizationID" class="form-control select2_single">
                                 <option>Select Partner Organization</option>
                                 @foreach (var d in Model.PartnerOrganizations)
                                 {
-                                <option value="@d.ID">@d.Title</option>
+                                    <option value="@d.ID">@d.Title</option>
                                 }
                             </select>
                         </div>
@@ -236,7 +258,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <input type="submit" class="btn btn-success" />
                         </div>
                     </div>
@@ -248,3 +270,32 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    @*  <script src="@Url.Content("~/Scripts/jqueryFoo.js")"></script>*@
+    <script type="text/javascript">
+
+        $('table').dataTable();
+        jQuery(document).ready(function ($) {
+
+            $('.datePicker').daterangepicker({
+                singleDatePicker: true,
+                calender_style: "picker_1"
+            }, function (start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
+            });
+            $('#undo_redo').multiselect();
+
+            $(".select2_single").select2({
+                allowClear: true
+            });
+        });
+
+        function showHideDistrict() {
+            $('.sel_district').toggle();
+
+        }
+
+    </script>
+}

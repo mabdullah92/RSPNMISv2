@@ -10,20 +10,33 @@ namespace RSPNMISv2.Models
     {
         protected override void Seed(ApplicationDbContext context)
         {
+            IList<Province> defaultProvinces = new List<Province>();
+            defaultProvinces.Add(new Province() { Country = "Pakistan", Prov_Id = 1, PROVINCE = "Baluchistan" });
+            defaultProvinces.Add(new Province() { Country = "Pakistan", Prov_Id = 2, PROVINCE = "Sindh" });
+            defaultProvinces.Add(new Province() { Country = "Pakistan", Prov_Id = 3, PROVINCE = "Gilgit Baltistan" });
+            defaultProvinces.Add(new Province() { Country = "Pakistan", Prov_Id = 4, PROVINCE = "KPK" });
+            defaultProvinces.Add(new Province() { Country = "Pakistan", Prov_Id = 5, PROVINCE = "Punjab" });
+            defaultProvinces.Add(new Province() { Country = "Pakistan", Prov_Id = 6, PROVINCE = "AJK" });
+
+            foreach (Province p in defaultProvinces)
+            {
+                context.Provinces.Add(p);
+            }
+
             IList<Indicator> defaultIndicators = new List<Indicator>();
 
-            defaultIndicators.Add(new Indicator() { ID = 1, IndicatorName = "Total rural and peri-urban UCs in the District", SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 2, IndicatorName = "# of rural union councils with RSP presence*", SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 3, IndicatorName = "Total Number of Villages", SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 4, IndicatorName = "# of villages with RSPs presence", SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 5, IndicatorName = "Total rural Households in District (1998 census)", SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 6, IndicatorName = "# of organised households", SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 7, IndicatorName = "# of Local Support Organisations (LSOs)", SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 8, IndicatorName = "# of Community Organisations (COs) formed", SubIndicatorName = "Women COs", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 9, IndicatorName = "# of Community Organisations (COs) formed", SubIndicatorName = "Men COs", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 10, IndicatorName = "# of Community Organisations (COs) formed", SubIndicatorName = "Mix COs", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 11, IndicatorName = "# of CO members", SubIndicatorName = "Women", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
-            defaultIndicators.Add(new Indicator() { ID = 12, IndicatorName = "# of CO members", SubIndicatorName = "Men", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 1, IndicatorName = "Total rural and peri-urban UCs in the District", IsCumulative = true, SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 2, IndicatorName = "# of rural union councils with RSP presence*", showVarianceInReports = true, IsCumulative = true, SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 3, IndicatorName = "Total Number of Villages", IsCumulative = true, SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 4, IndicatorName = "# of villages with RSPs presence", IsCumulative = true, SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 5, IndicatorName = "Total rural Households in District (1998 census)", IsCumulative = true, SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 6, IndicatorName = "# of Organized households", showVarianceInReports = true, IsCumulative = true, SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 7, IndicatorName = "# of Local Support Organizations (LSOs)", IsCumulative = true, SubIndicatorName = String.Empty, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 8, IndicatorName = "# of Community Organizations (COs) formed", showVarianceInReports = true, IsCumulative = true, SubIndicatorName = "Women COs", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 9, IndicatorName = "# of Community Organizations (COs) formed", showVarianceInReports = true, IsCumulative = true, SubIndicatorName = "Men COs", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 10, IndicatorName = "# of Community Organizations (COs) formed", showVarianceInReports = true, IsCumulative = true, SubIndicatorName = "Mix COs", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 11, IndicatorName = "# of CO members", SubIndicatorName = "Women", IsCumulative = true, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
+            defaultIndicators.Add(new Indicator() { ID = 12, IndicatorName = "# of CO members", SubIndicatorName = "Men", IsCumulative = true, IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
             defaultIndicators.Add(new Indicator() { ID = 13, IndicatorName = "Amount of savings of COs (Rs. Million)", SubIndicatorName = "Women", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
             defaultIndicators.Add(new Indicator() { ID = 14, IndicatorName = "Amount of savings of COs (Rs. Million)", SubIndicatorName = "Men", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
             defaultIndicators.Add(new Indicator() { ID = 15, IndicatorName = "# of community members trained", SubIndicatorName = "Women", IsActive = true, OrderIndex = 1000, CreatedBy = "Admin", DateCreated = DateTime.Now, DateModified = DateTime.Now, ModifiedBy = "Admin" });
@@ -56,6 +69,7 @@ namespace RSPNMISv2.Models
                 context.Indicators.Add(s);
             }
 
+
             IList<District> defaultDistricts = new List<District>();
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "WASHUK", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "AWARAN", Prov_Id = 1, PROVINCE = "Baluchistan" });
@@ -74,7 +88,7 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "NASIRABAD", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KILLA SAIFULLAH", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "LASBELA", Prov_Id = 1, PROVINCE = "Baluchistan" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SHERANI", Prov_Id = 1, PROVINCE = "Baluchistan" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SHEERANI", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KHUZDAR", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KECH", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KILLA ABDULLAH", Prov_Id = 1, PROVINCE = "Baluchistan" });
@@ -84,7 +98,7 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "ZIARAT", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KALAT", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KOHLU", Prov_Id = 1, PROVINCE = "Baluchistan" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "CHAGAI", Prov_Id = 1, PROVINCE = "Baluchistan" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "CHAGHI", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BARKHAN", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "GWADAR", Prov_Id = 1, PROVINCE = "Baluchistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SHIKARPUR", Prov_Id = 2, PROVINCE = "Sindh" });
@@ -92,28 +106,26 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TANDO ALLAHYAR", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "THARPARKAR", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SANGHAR", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SHAHEED BENAZIR ABAD", Prov_Id = 2, PROVINCE = "Sindh" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "NAWAB SHAH", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BADIN", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "UMER KOT", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KARACHI EAST", Prov_Id = 2, PROVINCE = "Sindh" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KARACHI", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "DADU", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KARACHI CENTRAL", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KARACHI MALIR", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "NAUSHAHRO FEROZE", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KARACHI SOUTH", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TANDO MUHAMMAD KHAN", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "GHOTKI", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "JAMSHORO", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KAMBAR SHAHDAD KOT", Prov_Id = 2, PROVINCE = "Sindh" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KAMBER SHAHDADKOT", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "LARKANA", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MATIARI", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KARACHI WEST", Prov_Id = 2, PROVINCE = "Sindh" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KASHMORE", Prov_Id = 2, PROVINCE = "Sindh" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KASHMOR", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "THATTA", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "HYDERABAD", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SUKKUR", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "JACOBABAD", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KHAIRPUR", Prov_Id = 2, PROVINCE = "Sindh" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KHOLU", Prov_Id = 2, PROVINCE = "Sindh" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TANDO ALLAH YAR", Prov_Id = 2, PROVINCE = "Sindh" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "GHANCHE", Prov_Id = 3, PROVINCE = "Gilgit Baltistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "GILGIT", Prov_Id = 3, PROVINCE = "Gilgit Baltistan" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "DIAMIR", Prov_Id = 3, PROVINCE = "Gilgit Baltistan" });
@@ -126,7 +138,7 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "LOWER DIR", Prov_Id = 4, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BUNER", Prov_Id = 4, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TANK", Prov_Id = 4, PROVINCE = "KPK" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MALAKAND P AREA", Prov_Id = 4, PROVINCE = "KPK" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MALAKAND", Prov_Id = 4, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "ABBOTTABAD", Prov_Id = 4, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SWAT", Prov_Id = 4, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SHANGLA", Prov_Id = 4, PROVINCE = "KPK" });
@@ -145,19 +157,19 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BATAGRAM", Prov_Id = 4, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "NOWSHERA", Prov_Id = 4, PROVINCE = "KPK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "PESHAWAR", Prov_Id = 4, PROVINCE = "KPK" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KURRAM AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "T A ADJ KOHAT", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "T A ADJ PESHAWAR", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KURRUM AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TRIBAL AREA ADJ KOHAT", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TRIBAL AREA ADJ PESHAWAR", Prov_Id = 5, PROVINCE = "FATA" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KHYBER AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "T A ADJ D.I.KHAN", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TRIBAL AREA ADJ D.I.KHAN", Prov_Id = 5, PROVINCE = "FATA" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "ORAKZAI AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "T.A.ADJ.LAKKI MARWAT", Prov_Id = 5, PROVINCE = "FATA" });
+
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BAJAUR AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "T A ADJ BANNU", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "S WAZIRISTAN AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "N WAZIRISTAN AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TRIBAL AREA ADJ BANNU", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SOUTH WAZIRISTAN AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "NORTH WAZIRISTAN AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MOHMAND AGENCY", Prov_Id = 5, PROVINCE = "FATA" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "T A ADJ TANK", Prov_Id = 5, PROVINCE = "FATA" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "TRIBAL AREA ADJ TANK", Prov_Id = 5, PROVINCE = "FATA" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "ISLAMABAD", Prov_Id = 6, PROVINCE = "Islamabad" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MANDI BAHAUDDIN", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "FAISALABAD", Prov_Id = 7, PROVINCE = "Punjab" });
@@ -168,7 +180,7 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BAHAWALNAGAR", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SARGODHA", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KHANEWAL", Prov_Id = 7, PROVINCE = "Punjab" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "LEIAH", Prov_Id = 7, PROVINCE = "Punjab" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "LAYYAH", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "OKARA", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "DERA GHAZI KHAN", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "JHANG", Prov_Id = 7, PROVINCE = "Punjab" });
@@ -180,7 +192,7 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "VEHARI", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "GUJRANWALA", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "LAHORE", Prov_Id = 7, PROVINCE = "Punjab" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BHAKKAR", Prov_Id = 7, PROVINCE = "Punjab" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BHAKHAR", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "RAJANPUR", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MUZAFFARGARH", Prov_Id = 7, PROVINCE = "Punjab" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MIANWALI", Prov_Id = 7, PROVINCE = "Punjab" });
@@ -198,14 +210,13 @@ namespace RSPNMISv2.Models
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BAGH", Prov_Id = 8, PROVINCE = "AJK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MIRPUR", Prov_Id = 8, PROVINCE = "AJK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "SUDHNOTI", Prov_Id = 8, PROVINCE = "AJK" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "HATTIAN BALA", Prov_Id = 8, PROVINCE = "AJK" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "HATIAN", Prov_Id = 8, PROVINCE = "AJK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "MUZAFFARABAD", Prov_Id = 8, PROVINCE = "AJK" });
-            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "HAVELI(KAHUTA)", Prov_Id = 8, PROVINCE = "AJK" });
+            defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "HAVELI", Prov_Id = 8, PROVINCE = "AJK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "KOTLI", Prov_Id = 8, PROVINCE = "AJK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "POONCH", Prov_Id = 8, PROVINCE = "AJK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "NEELUM", Prov_Id = 8, PROVINCE = "AJK" });
             defaultDistricts.Add(new District() { Country = "Pakistan", Dist_Id = 1, District_Name = "BHIMBER", Prov_Id = 8, PROVINCE = "AJK" });
-
             //No change
             foreach (District s in defaultDistricts)
             {
