@@ -203,6 +203,10 @@
     <Compile Include="Migrations\201511160656407_Initial.Designer.cs">
       <DependentUpon>201511160656407_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.cs" />
+    <Compile Include="Migrations\201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.Designer.cs">
+      <DependentUpon>201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbInitializer.cs" />
@@ -596,6 +600,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511160656407_Initial.resx">
       <DependentUpon>201511160656407_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.resx">
+      <DependentUpon>201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

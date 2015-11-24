@@ -346,13 +346,13 @@ namespace RSPNMISv2.Controllers
 
         public ActionResult Indicators()
         {
-            dynamic viewModel = new ExpandoObject();
-            viewModel.Indicators = DbHelpers.getIndicators();
-            return View(viewModel);
+            IndicatorViewModel vm = new IndicatorViewModel();
+            vm.Indicators = DbHelpers.getIndicators();
+            return View(vm);
         }
 
         [HttpPost]
-        public ActionResult Indicators(int orderIndex, string indicatorName, string subIndicatorName)
+        public ActionResult Indicators(IndicatorViewModel model)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             Indicator o = new Indicator();
@@ -360,9 +360,11 @@ namespace RSPNMISv2.Controllers
             o.DateCreated = DateTime.UtcNow;
             o.DateModified = DateTime.UtcNow;
             o.ModifiedBy = User.Identity.Name;
-            o.IndicatorName = indicatorName;
-            o.SubIndicatorName = subIndicatorName;
-            o.OrderIndex = orderIndex;
+            o.IndicatorName = model.IndicatorName;
+            o.SubIndicatorName = model.SubIndicatorName;
+            o.OrderIndex = model.OrderIndex;
+            o.IsCumulative = model.IsCumulative;
+            o.showVarianceInReports = model.showVarianceInReports;
             o.IsActive = true;
             db.Indicators.Add(o);
             db.SaveChanges();

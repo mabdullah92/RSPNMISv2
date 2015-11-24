@@ -42,7 +42,7 @@ namespace RSPNMISv2.Helpers
             ApplicationDbContext db = new ApplicationDbContext();
             IEnumerable<District> districts = db.Districts;
             IEnumerable<PartnerOrganization> pos = db.PartnerOrganizations;
-            IEnumerable<PO_District> poDistricts = db.PO_Districts;
+            IEnumerable<ProjectDistrict> poDistricts = db.ProjectDistricts;
             Array result;
             //var query;
             if (po_id == -1)

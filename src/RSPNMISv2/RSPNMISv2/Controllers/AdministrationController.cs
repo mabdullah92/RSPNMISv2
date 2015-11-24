@@ -1,5 +1,6 @@
 ﻿using RSPNMISv2.Helpers;
 using RSPNMISv2.Models;
+using RSPNMISv2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -19,27 +20,29 @@ namespace RSPNMISv2.Controllers
 
         public ActionResult PartnerOrganizations()
         {
-            dynamic viewModel = new ExpandoObject();
-            viewModel.POs = DbHelpers.getPartnerOrganizations();
-            viewModel.Districts = DbHelpers.getDistricts();
-            return View(viewModel);
+            PartnerOrganizationViewModel vm = new PartnerOrganizationViewModel();
+            vm.PartnerOrganizations = DbHelpers.getPartnerOrganizations();
+            vm.Districts = DbHelpers.getDistricts();
+            vm.ProjectDistricts = DbHelpers.getRspDistricts();
+            return View(vm);
         }
 
         [HttpPost]
-        public ActionResult PartnerOrganizations(int poType, string title, string abbr, string description, string year, string color)
+        public ActionResult PartnerOrganizations(PartnerOrganizationViewModel model)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
             PartnerOrganization o = new PartnerOrganization();
-            o.PartnerOrganizationType_ID = poType;
-            o.Title = title;
-            o.Abbr = abbr;
-            o.Description = description;
-            o.YearFounded = Convert.ToInt32(year);
-            o.ColorCode = color;
+            o.PartnerOrganizationType_ID = model.PartnerOrganizationType_ID;
+            o.Title = model.Title;
+            o.Abbr = model.Abbr;
+            o.Description = model.Description;
+            o.YearFounded = model.YearFounded;
+            o.ColorCode = model.ColorCode;
             db.PartnerOrganizations.Add(o);
             db.SaveChanges();
-            return View();
+
+            return View(model);
         }
         public ActionResult Sectors()
         {
@@ -47,16 +50,16 @@ namespace RSPNMISv2.Controllers
         }
 
         [HttpPost]
-        public ActionResult PoDistricts(int poType, List<int> to)
+        public ActionResult PoDistricts(PartnerOrganizationViewModel model)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            PO_District o = new PO_District();
-            o.PartnerOrganizationID = poType;
-            foreach (int i in to)
+            ProjectDistrict o = new ProjectDistrict();
+            o.PartnerOrganizationID = model.PartnerOrganizationID;
+            foreach (int i in model.SelectedDistrictID)
             {
                 o.Dist_Id = i;
-                db.PO_Districts.Add(o);
+                db.ProjectDistricts.Add(o);
                 db.SaveChanges();
             }
 

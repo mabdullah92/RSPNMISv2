@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "Indicators";
 }
-@using RSPNMISv2.ViewModels
-@model dynamic
+@model RSPNMISv2.ViewModels.IndicatorViewModel
+
 <h2>Indicators</h2>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -37,47 +37,49 @@
                 {
 
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="indicatorName">
-                            Indicator Name <span class="required">*</span>
-                        </label>
+
+                        @Html.LabelFor(d => d.IndicatorName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" }) <span class="required">*</span>
+
+
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="indicatorName" name="indicatorName" required="required" class="form-control col-md-7 col-xs-12" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subIndicatorName">
-                            Sub-Indicator Name <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="subIndicatorName" name="subIndicatorName" required="required" class="form-control col-md-7 col-xs-12" />
+                            @Html.TextBoxFor(d => d.IndicatorName, new { @class = "form-control col-md-7 col-xs-12", name = "indicatorName", @placeholder = "e.g. Total COs" })
 
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            District Wise Data Available <span class="required">*</span>
-                        </label>
+
+                        @Html.LabelFor(d => d.SubIndicatorName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" }) <span class="required">*</span>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(d => d.SubIndicatorName, new { @class = "form-control col-md-7 col-xs-12", name = "subIndicatorName", @placeholder = "e.g. Women COs" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        @Html.LabelFor(d => d.IsCumulative, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" }) <span class="required">*</span>
+
+
                         <div class="col-md-3 col-sm-6 col-xs-12">
+                            @Html.CheckBoxFor(d => d.IsCumulative, new { @class = "js-switch", name = "districtWiseData" })
 
-                            <input type="checkbox" class="js-switch" name="districtWiseData" checked />
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            Show Variance For this Indicator <span class="required">*</span>
-                        </label>
+
+                        @Html.LabelFor(d => d.showVarianceInReports, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" }) <span class="required">*</span>
+
+
                         <div class="col-md-3 col-sm-6 col-xs-12">
-
-                            <input type="checkbox"  class="js-switch" name="showVariance" checked />
+                            @Html.CheckBoxFor(d => d.showVarianceInReports, new { @class = "js-switch", name = "showVariance" })
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label for="orderIndex" class="control-label col-md-3 col-sm-3 col-xs-12">Order Index</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="orderIndex" name="orderIndex" required="required" class="form-control col-md-7 col-xs-12" />
+                        @Html.LabelFor(d => d.OrderIndex, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" }) <span class="required">*</span>
 
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(d => d.OrderIndex, new { @class = "form-control col-md-7 col-xs-12", name = "orderIndex" })
                         </div>
                     </div>
 

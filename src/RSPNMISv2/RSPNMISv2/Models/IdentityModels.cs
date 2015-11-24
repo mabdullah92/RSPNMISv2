@@ -39,7 +39,7 @@ namespace RSPNMISv2.Models
         public DbSet<District> Districts { set; get; }
         public DbSet<UC> UCs { set; get; }
         public DbSet<RSPOutreach> RSPOutreachs { set; get; }
-        public DbSet<PO_District> PO_Districts { set; get; }
+        public DbSet<ProjectDistrict> ProjectDistricts { set; get; }
         public DbSet<Province> Provinces { set; get; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -199,7 +199,7 @@ namespace RSPNMISv2.Models
         public string Country { set; get; }
     }
 
-    public class PO_District
+    public class ProjectDistrict
     {
 
         [Key]

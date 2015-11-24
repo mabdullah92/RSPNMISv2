@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model RSPNMISv2.ViewModels.PartnerOrganizationViewModel
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -33,27 +33,16 @@
                 {
 
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            Select Partner Organization <span class="required">*</span>
-                        </label>
+
+                        @Html.LabelFor(d => d.PartnerOrganizationID, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })  <span class="required">*</span>
+
                         <div class="col-md-3 col-sm-6 col-xs-12">
-                            <select name="poType" class="form-control">
-                                <option>Select Partner Organization</option>
-                                @foreach (var d in Model.POs)
-                                {
-                                    <option value="@d.ID">@d.Title</option>
-                                }
-                            </select>
+                            @Html.DropDownListFor(x => x.PartnerOrganizationID, new SelectList(Model.PartnerOrganizations, "ID", "Title"), "SELECT ONE", new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-5">
-                            <select name="from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
-                                @foreach (var d in Model.Districts)
-                                {
-                                    <option value="@d.Dist_Id">@d.District_Name</option>
-                                }
-                            </select>
+                            @Html.DropDownListFor(x => x.DistrictID, new SelectList(Model.Districts, "Dist_Id", "District_Name"), new { size = "13", id = "undo_redo", @class = "form-control", multiple = "multiple" })
                         </div>
 
                         <div class="col-xs-2">
@@ -66,7 +55,7 @@
                         </div>
 
                         <div class="col-xs-5">
-                            <select name="to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>
+                            @Html.DropDownListFor(x => x.SelectedDistrictID, new SelectList(Model.ProjectDistricts, "Dist_Id", "District_Name"), new { size = "13", id = "undo_redo_to", @class = "form-control", multiple = "multiple" })
                         </div>
                     </div>
                     <div class="ln_solid"></div>
@@ -82,4 +71,3 @@
         </div>
     </div>
 </div>
-

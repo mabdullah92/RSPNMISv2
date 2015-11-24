@@ -71,3 +71,4 @@ D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.csp
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.dll
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.pdb
 D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.csprojResolveAssemblyReference.cache
+D:\Workspace\RSPNMISv2\RSPNMISv2\src\RSPNMISv2\RSPNMISv2\obj\Debug\RSPNMISv2.Migrations._11232015PO_DistrictsTableRenamedProjectDistricts.resources
