@@ -23,7 +23,7 @@ namespace RSPNMISv2.ViewModels
         public Nullable<int> UC_Id { set; get; }
         public string IndicatorName { set; get; }
         public string DistrictName { set; get; }
-        public int PartnerOrganizationId { set; get; }
+        public Nullable<int> PartnerOrganizationId { set; get; }
         public string PartnerOrganizationName { set; get; }
         public string SubIndicatorName { set; get; }
     }
@@ -74,13 +74,13 @@ namespace RSPNMISv2.ViewModels
 
         [Display(Name = "Indicator Name")]
         public string IndicatorName { set; get; }
-        
+
         [Display(Name = "Sub Indicator Name")]
         public string SubIndicatorName { set; get; }
-        
+
         [Display(Name = "Order Index")]
         public long OrderIndex { set; get; }
-       
+
         [Display(Name = "Is Active")]
         public bool IsActive { set; get; }
 
@@ -88,13 +88,33 @@ namespace RSPNMISv2.ViewModels
         public string CreatedBy { set; get; }
         public DateTime DateModified { set; get; }
         public string ModifiedBy { set; get; }
-       
+
         [Display(Name = "Cumulative Data")]
         public bool IsCumulative { set; get; } // true if RSP Sends data cumulatively without Districts
-      
+
         [Display(Name = "Show Variance in Reports")]
         public bool showVarianceInReports { set; get; } // if Variance is needed in Report
 
         public IList<Indicator> Indicators { set; get; }
+    }
+
+    public class DataFormViewModel
+    {
+        [Display(Name = "Select Partner Organization")]
+        public int PartnerOrganizationID { set; get; }
+        [Display(Name = "Select District")]
+        public String DistrictName { set; get; }
+        [Display(Name = "Reporting Date")]
+        public DateTime RerportingDate { set; get; }
+        [Display(Name = "Indicator")]
+        public String Indicator { set; get; }
+        [Display(Name = "Indicator Value")]
+        public List<decimal> Value { set; get; }
+    }
+    public class ReportingDates
+    {
+        public DateTime ReportingDate { get; set; }
+        public string ReportingMonthYear { get; set; }
+
     }
 }

@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "UploadDistrictDataSheet";
+}
+
+<h2>UploadDistrictDataSheet</h2>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Upload Data <small>Format (.xlsx) </small></h2>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainForm", enctype = "multipart/form-data" }))
+                {
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            <h2> Upload File</h2>
+                        </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="file" name="rspFile" />
+                        </div>
+                    </div>
+                    <br /><br /><br />
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+
+                <hr />
+                @using (Html.BeginForm("emptyUserCache", null, FormMethod.Post, new { id = "EmptyUserCacheForm", enctype = "multipart/form-data" }))
+                {
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            <h2>Remove file Data</h2>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="submit" class="btn btn-warning" value="Clear Uploaded Data" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

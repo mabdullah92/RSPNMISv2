@@ -85,6 +85,7 @@ namespace RSPNMISv2.Models
             OrderIndex = 1000;
             IsActive = true;
             IsCumulative = false;
+            SumOverlapping = true;
         }
         [Key]
         [Display(Name = "ID")]
@@ -106,7 +107,8 @@ namespace RSPNMISv2.Models
         public string ModifiedBy { set; get; }
 
         public bool IsCumulative { set; get; } // true if RSP Sends data cumulatively without Districts
-        public bool showVarianceInReports { set; get; } // if Variance is needed in Report
+        public bool ShowVarianceInReports { set; get; } // if Variance is needed in Report
+        public bool SumOverlapping { set; get; } // if Variance is needed in Report
 
     }
     public class District
@@ -114,6 +116,8 @@ namespace RSPNMISv2.Models
 
         [StringLength(250)]
         public string District_Name { set; get; }
+        [StringLength(250)]
+        public string AlternateName { set; get; }
         [StringLength(250)]
         public string PROVINCE { set; get; }
         public Nullable<int> Prov_Id { set; get; }
@@ -178,7 +182,7 @@ namespace RSPNMISv2.Models
         public string ModifiedBy { set; get; }
 
         [ForeignKey("PartnerOrganization")]
-        public int PartnerOrganizationID { set; get; }
+        public Nullable<int> PartnerOrganizationID { set; get; }
         public virtual PartnerOrganization PartnerOrganization { set; get; }
 
         public bool IsCumulative { set; get; } // true if RSP Sends data cumulatively without Districts
@@ -214,6 +218,7 @@ namespace RSPNMISv2.Models
         public int Dist_Id { set; get; }
         public virtual District District { set; get; }
     }
+
 
   
 

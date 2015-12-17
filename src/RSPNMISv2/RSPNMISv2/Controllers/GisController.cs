@@ -44,6 +44,37 @@ namespace RSPNMISv2.Controllers
             return View(viewModel);
         }
 
+        public ActionResult RspProjects() {
+
+            List<PartnerOrganization> poList = DbHelpers.getPartnerOrganizations();
+            var rspDistrictList = new List<RSPDistrictsViewModel>();
+
+            foreach (PartnerOrganization p in poList)
+            {
+                string b = string.Empty;
+                Array rspDistricts = DbHelpers.getRspDistricts(p.ID);
+                foreach (dynamic a in rspDistricts)
+                {
+                    string c = a.DistrictName;
+                    b = b + "','" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(c.ToLower());
+                }
+
+                rspDistrictList.Add(new RSPDistrictsViewModel
+                {
+                    Rsp = p.Abbr,
+                    DistrictsNames = b,
+                    ColorCode = p.ColorCode
+                });
+
+            }
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.RspDistricts = rspDistrictList;
+            viewModel.PartnerOrganizations = poList;
+            viewModel.ReportingDates = DbHelpers.getReportingDates();
+            return View(viewModel);
+        }
+
     }
 
 }

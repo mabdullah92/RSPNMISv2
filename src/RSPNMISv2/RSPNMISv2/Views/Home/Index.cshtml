@@ -12,11 +12,17 @@
 </style>
 <!-- top tiles -->
 <div class="row">
-    <div class="col-sm-3 col-sm-offset-4">
-        <h1>Overview of RSPs</h1> <hr /> <h3>Social Mobilization Outreach</h3>
+    <div class="col-sm-1 ">
+        <img src="~/Content/images/eu.png" style=" width: 163px;" />
     </div>
-
-</div>
+    <div class="col-sm-4 col-sm-offset-3" style="text-align:center;">
+        <h1>Social Mobilization Outreach</h1> <hr /> <h3>Overview of RSPs</h3>
+     
+    </div>
+    <div class="col-sm-1 col-sm-offset-2">
+        <img src="~/Content/images/rspnLogo.png" style=" width: 202px;" />
+    </div>
+    </div>
 <div class="row top_tiles">
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="tile-stats">
@@ -92,6 +98,41 @@
     <div class="col-sm-6">
         <div class="x_panel tile">
             <div class="x_title">
+                <h2>RSP's Outreach Map </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div id="map" style="height:400px">
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="x_panel tile">
+            <div class="x_title">
                 <h2>Province/Area wise number of union councils with RSP presence </h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
@@ -118,7 +159,7 @@
              
                 (As of November, 2015)
 
-                <div id="chart1" style="height:300px">
+                <div id="chart1" style="height:400px">
 
                 </div>
 
@@ -128,6 +169,12 @@
     </div>
 
 
+
+
+
+</div>
+
+<div class="row">
 
     <div class="col-sm-6">
 
@@ -158,7 +205,7 @@
             <div class="x_content">
                 (As of November, 2015)
 
-                <div id="chart2" style="height:300px">
+                <div id="chart2" style="height:400px">
 
                 </div>
             </div>
@@ -166,13 +213,7 @@
 
     </div>
 
-</div>
-
-<div class="row">
-
-
-
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <div class="x_panel tile">
             <div class="x_title">
                 <h2> Province-wise Organized households </h2>
@@ -217,9 +258,12 @@
 @section Scripts
 {
 
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="@Url.Content("~/Content/maps/districts.geojson")"></script>
+<script src="http://code.highcharts.com/maps/highmaps.js" )"></script>
+<script src="https://code.highcharts.com/maps/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
 <script src="http://code.highcharts.com/highcharts-3d.js"></script>
 
     <script>
@@ -230,11 +274,14 @@
                     options3d: {
                         enabled: true,
                         alpha: 2,
-                        beta: 0,
+                        beta: 15,
                         depth: 70,
                         viewDistance: 25
 
                     },
+                },
+                credits: {
+                    enabled: false
                 },
                 title: {
                     text: ''
@@ -290,10 +337,13 @@
                     options3d: {
                         enabled: true,
                         alpha: 2,
-                        beta: 15,
+                        beta: -15,
                         depth: 50,
                         viewDistance: 25
                     },
+                },
+                credits: {
+                    enabled: false
                 },
                 title: {
                     text: ''
@@ -355,12 +405,15 @@
                     options3d: {
                         enabled: true,
                         alpha: 2,
-                        beta: -15,
+                        beta: 15,
                         depth: 50,
                         viewDistance: 15
                     },
                   
   
+                },
+                credits: {
+                    enabled: false
                 },
                 title: {
                     text: ''
@@ -412,6 +465,117 @@
 
                 }]
             });
+        });
+
+        var geojson = data;
+        var series = [
+
+                {
+                    allAreas: true,
+                    mapData: geojson,
+                    color: '#000000',
+                    showInLegend: false,
+                },
+                   @foreach (var p in Model.RspDistricts)
+        {
+
+            <text>
+
+               {
+                   allAreas: false,
+                   name: '@p.Rsp',
+                   zIndex: 10,
+                   color: '@p.ColorCode',
+                   data: $.map(['@Html.Raw(p.DistrictsNames)'], function (code) {
+                       return { code: code };
+                   })
+               },
+
+           </text>
+        }
+
+
+        ]
+
+        $(document).ready(function () {
+            var a = $('#map').highcharts('Map', {
+                title: {
+                    text: ''
+                },
+                exporting: {
+                    chartOptions: { // specific options for the exported image
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+
+                            },
+
+                        }
+                    },
+                    scale: 3,
+                    fallbackToExportServer: false
+                },
+                subtitle: {
+                    text: ''
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    enableDoubleClickZoomTo: true
+                },
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false
+                },
+                type: "map",
+
+                series: series,
+                plotOptions: {
+                    series: {
+                        point: {
+                            events: {
+                                click: function () {
+                                    getKpiData(this.code);
+                                }
+                            }
+                        }
+                    },
+                    map: {
+
+                        zIndex: 1,
+                        joinBy: ['District', 'code'],
+                        dataLabels: {
+                            enabled: true,
+                            color: 'black',
+                            formatter: function () {
+
+                                if (this.point.code) {
+                                    return this.point.code;
+                                }
+                            },
+                            format: null,
+                            style: {
+                                fontWeight: 'bold'
+                            }
+                        },
+                        mapData: geojson,
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: 'District : {point.code}<br>RSP : <b>{series.name}</b><br>'
+                        }
+
+                    }
+                },
+
+
+
+
+            });
+
         });
     </script>
 

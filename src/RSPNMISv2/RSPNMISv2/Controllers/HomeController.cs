@@ -1,9 +1,13 @@
 ﻿using OfficeOpenXml;
+using RSPNMISv2.Helpers;
 using RSPNMISv2.Models;
+using RSPNMISv2.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -16,20 +20,32 @@ namespace RSPNMISv2.Controllers
 
         public ActionResult Index()
         {
-            //using (ApplicationDbContext db = new ApplicationDbContext())
-            //{
-            //    PartnerOrganization o = new PartnerOrganization();
-            //    o.Title = "ABC";
-            //    o.ID = 505;
-            //    o.YearFounded = 2007;
-            //    o.Description = "Some DES";
-            //    o.ColorCode = "#009900";
-            //    o.Abbr = "ABC";
+            List<PartnerOrganization> poList = DbHelpers.getPartnerOrganizations();
+            var rspDistrictList = new List<RSPDistrictsViewModel>();
 
-            //    db.PartnerOrganizations.Add(o);
-            //    db.SaveChanges();
-            //}
-            return View();
+            foreach (PartnerOrganization p in poList)
+            {
+                string b = string.Empty;
+                Array rspDistricts = DbHelpers.getRspDistricts(p.ID);
+                foreach (dynamic a in rspDistricts)
+                {
+                    string c = a.DistrictName;
+                    b = b + "','" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(c.ToLower());
+                }
+
+                rspDistrictList.Add(new RSPDistrictsViewModel
+                {
+                    Rsp = p.Abbr,
+                    DistrictsNames = b,
+                    ColorCode = p.ColorCode
+                });
+
+            }
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.RspDistricts = rspDistrictList;
+
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase rspFile)

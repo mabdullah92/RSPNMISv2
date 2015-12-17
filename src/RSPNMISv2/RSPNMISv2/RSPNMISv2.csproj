@@ -207,6 +207,18 @@
     <Compile Include="Migrations\201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.Designer.cs">
       <DependentUpon>201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512090912488_Add Column AlternateName in Districts.cs" />
+    <Compile Include="Migrations\201512090912488_Add Column AlternateName in Districts.Designer.cs">
+      <DependentUpon>201512090912488_Add Column AlternateName in Districts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512101050527_Partner Oganization is Nullable in Outreach.cs" />
+    <Compile Include="Migrations\201512101050527_Partner Oganization is Nullable in Outreach.Designer.cs">
+      <DependentUpon>201512101050527_Partner Oganization is Nullable in Outreach.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512180633001_dbcheck for overlaping sum in rsp outreachs.cs" />
+    <Compile Include="Migrations\201512180633001_dbcheck for overlaping sum in rsp outreachs.Designer.cs">
+      <DependentUpon>201512180633001_dbcheck for overlaping sum in rsp outreachs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbInitializer.cs" />
@@ -220,6 +232,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\css\select\select2.min.css" />
     <Content Include="Content\css\switchery\switchery.min.css" />
+    <Content Include="Content\images\eu.png" />
+    <Content Include="Content\images\loader.gif" />
+    <Content Include="Content\images\rspnLogo.png" />
     <Content Include="Content\style.css" />
     <Content Include="App_Data\bootstrap.min.css" />
     <Content Include="Content\css\animate.min.css" />
@@ -467,6 +482,7 @@
     <Content Include="Content\maps\districts.geojson" />
     <Content Include="App_Data\uploads\book2.xlsx" />
     <Content Include="App_Data\uploads\Book3.xlsx" />
+    <Content Include="Content\maps\Province.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -586,6 +602,9 @@
     <Content Include="Views\Gis\Index.cshtml" />
     <Content Include="Views\DataService\Index.cshtml" />
     <Content Include="Views\Outreach\TransposedUpload.cshtml" />
+    <Content Include="Views\Gis\RspProjects.cshtml" />
+    <Content Include="Views\Outreach\UploadDistrictDataSheet.cshtml" />
+    <Content Include="Views\Outreach\DistrictOutreach.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Reports\" />
@@ -603,6 +622,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.resx">
       <DependentUpon>201511230915252_11232015 PO_Districts Table Renamed ProjectDistricts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512090912488_Add Column AlternateName in Districts.resx">
+      <DependentUpon>201512090912488_Add Column AlternateName in Districts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512101050527_Partner Oganization is Nullable in Outreach.resx">
+      <DependentUpon>201512101050527_Partner Oganization is Nullable in Outreach.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512180633001_dbcheck for overlaping sum in rsp outreachs.resx">
+      <DependentUpon>201512180633001_dbcheck for overlaping sum in rsp outreachs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

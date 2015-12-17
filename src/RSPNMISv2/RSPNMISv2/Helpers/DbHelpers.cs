@@ -43,18 +43,25 @@ namespace RSPNMISv2.Helpers
             IEnumerable<District> districts = db.Districts;
             IEnumerable<PartnerOrganization> pos = db.PartnerOrganizations;
             IEnumerable<ProjectDistrict> poDistricts = db.ProjectDistricts;
-            Array result;
+            Array result = null;
             //var query;
             if (po_id == -1)
             {
                 var query = from pd in poDistricts join dist in districts on pd.Dist_Id equals dist.Dist_Id join po in pos on pd.PartnerOrganizationID equals po.ID where (dist.Prov_Id == provinceId) orderby dist.District_Name ascending select new { PO_ID = po.ID, Color = po.ColorCode, DistrictName = dist.District_Name, ID = dist.Dist_Id, Rsp = po.Abbr, ProvId = dist.Prov_Id };
                 result = query.ToArray();
             }
-            else
+            if (po_id != -1 && provinceId == -1)
             {
                 var query = from pd in poDistricts join dist in districts on pd.Dist_Id equals dist.Dist_Id join po in pos on pd.PartnerOrganizationID equals po.ID where (po.ID == po_id) select new { PO_ID = po.ID, DistrictName = dist.District_Name, ID = dist.Dist_Id, Rsp = po.Abbr, ProvId = dist.Prov_Id };
                 result = query.ToArray();
             }
+
+            //if (partners !=null)
+            //{
+            //    var query = from pd in poDistricts join dist in districts on pd.Dist_Id equals dist.Dist_Id join po in pos on pd.PartnerOrganizationID equals po.ID where (partners.Contains(po.ID)) orderby dist.District_Name ascending select new { PO_ID = po.ID, Color = po.ColorCode, DistrictName = dist.District_Name, ID = dist.Dist_Id, Rsp = po.Abbr, ProvId = dist.Prov_Id };
+            //    result = query.ToArray();
+
+            //}
 
             return result;
         }
@@ -101,10 +108,88 @@ namespace RSPNMISv2.Helpers
             IEnumerable<RSPOutreach> rspOutreachs = db.RSPOutreachs;
             IEnumerable<PartnerOrganization> pos = db.PartnerOrganizations;
             //                                  /                                                       /                                                       /                                           /
-            var query = from pd in rspOutreachs join indicator in indicators on pd.IndicatorID equals indicator.ID join dist in districts on pd.Dist_Id equals dist.Dist_Id join po in pos on pd.PartnerOrganizationID equals po.ID where (dist.District_Name == districtName.ToUpper())  select new { DistrictName = dist.District_Name, indicatorName = indicator.IndicatorName, subIndicatorName= indicator.SubIndicatorName,value=pd.Value, Rsp = po.Abbr };
+            var query = from pd in rspOutreachs join indicator in indicators on pd.IndicatorID equals indicator.ID join dist in districts on pd.Dist_Id equals dist.Dist_Id join po in pos on pd.PartnerOrganizationID equals po.ID where (dist.District_Name == districtName.ToUpper()) select new { DistrictName = dist.District_Name, indicatorName = indicator.IndicatorName, subIndicatorName = indicator.SubIndicatorName, value = pd.Value, Rsp = po.Abbr };
             Array result = query.ToArray();
 
             return result;
         }
+
+        // GET : DATA FOR DISTRICT IN GIS
+        public static Array getGisData(DateTime ReportingDate,string[] dists = default(string[]), int[] PoIDs = default(int[]), string[] Provinces = default(string[]))
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            IEnumerable<District> districts = db.Districts;
+            IEnumerable<Indicator> indicators = db.Indicators;
+            IEnumerable<RSPOutreach> rspOutreachs = db.RSPOutreachs;
+            IEnumerable<PartnerOrganization> pos = db.PartnerOrganizations;
+            //                                  /                                                       /                                                       /                                           /
+            var query = from pd in rspOutreachs join indicator in indicators on pd.IndicatorID equals indicator.ID join dist in districts on pd.Dist_Id equals dist.Dist_Id join po in pos on pd.PartnerOrganizationID equals po.ID where (pd.ReportingDate == ReportingDate) select new { PartnerOrganizationName = po.Title, PartnerOrganizationID = po.ID, DistrictName = dist.District_Name, Province = dist.PROVINCE, indicatorName = indicator.IndicatorName, subIndicatorName = indicator.SubIndicatorName, indicatorId = indicator.ID, value = pd.Value, Rsp = po.Abbr };
+      
+     
+
+            if (dists!=null && dists.Count() > 0)
+            {
+                dists = dists.Select(m => m.ToUpper()).ToArray();
+                query = query.Where(x => dists.Contains(x.DistrictName.ToUpper()));
+            }
+            if (Provinces!=null && Provinces.Count() > 0)
+            {
+                Provinces = Provinces.Select(m => m.ToUpper()).ToArray();
+                query = query.Where(x => Provinces.Contains(x.Province.ToUpper()));
+            }
+            if (PoIDs!=null && !PoIDs.Contains(-1) && PoIDs.Count() > 0)
+            {
+                query = query.Where(x => PoIDs.Contains(x.PartnerOrganizationID));
+            }
+
+
+
+            Array result = query.GroupBy(u => u.indicatorId).Select(g => new { IndicatorName = g.First().indicatorName,IndicatorId=g.First().indicatorId, SubIndicatorName = g.First().subIndicatorName,value=g.Sum(v=>v.value) }).ToArray();
+            return result;
+        }
+
+        // GET : KPI Trends For GIS
+        public static Array getTrends(int IndicatorId,DateTime ReportingDate, string[] dists = default(string[]), int[] PoIDs = default(int[]), string[] Provinces = default(string[]))
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            IEnumerable<District> districts = db.Districts;
+            IEnumerable<Indicator> indicators = db.Indicators;
+            IEnumerable<RSPOutreach> rspOutreachs = db.RSPOutreachs;
+            IEnumerable<PartnerOrganization> pos = db.PartnerOrganizations;
+            //                                  /                                                       /                                                       /                                           /
+            var query = from pd in rspOutreachs join indicator in indicators on pd.IndicatorID equals indicator.ID join dist in districts on pd.Dist_Id equals dist.Dist_Id join po in pos on pd.PartnerOrganizationID equals po.ID where (pd.IndicatorID == IndicatorId) orderby pd.ReportingDate ascending select new { PartnerOrganizationName = po.Title,ReportingDate=pd.ReportingDate, PartnerOrganizationID = po.ID, DistrictName = dist.District_Name, Province = dist.PROVINCE, indicatorName = indicator.IndicatorName, subIndicatorName = indicator.SubIndicatorName, indicatorId = indicator.ID, value = pd.Value, Rsp = po.Abbr };
+
+
+
+            if (dists != null && dists.Count() > 0)
+            {
+                dists = dists.Select(m => m.ToUpper()).ToArray();
+                query = query.Where(x => dists.Contains(x.DistrictName.ToUpper()));
+            }
+            if (Provinces != null && Provinces.Count() > 0)
+            {
+                Provinces = Provinces.Select(m => m.ToUpper()).ToArray();
+                query = query.Where(x => Provinces.Contains(x.Province.ToUpper()));
+            }
+            if (PoIDs != null && !PoIDs.Contains(-1) && PoIDs.Count() > 0)
+            {
+                query = query.Where(x => PoIDs.Contains(x.PartnerOrganizationID));
+            }
+
+
+
+            Array result = query.GroupBy(u => u.ReportingDate).Select(g => new {ReportingDate=g.First().ReportingDate,IndicatorName = g.First().indicatorName, IndicatorId = g.First().indicatorId, SubIndicatorName = g.First().subIndicatorName, value = g.Sum(v => v.value) }).ToArray();
+            return result;
+        }
+
+        // GET : Reporting Dates
+
+        public static Array getReportingDates(){
+              ApplicationDbContext db = new ApplicationDbContext();
+              Array result = db.Database.SqlQuery<ReportingDates>("SELECT [ReportingDate],CONCAT(DATENAME(mm, [ReportingDate]),', ' ,DATENAME(YYYY, [ReportingDate]),'.') AS ReportingMonthYear FROM [RSPNMIS_DB].[dbo].[RSPOutreaches] GROUP BY [ReportingDate] ORDER BY ReportingDate DESC").ToArray();
+              return result;
+        }
+
+
     }
 }

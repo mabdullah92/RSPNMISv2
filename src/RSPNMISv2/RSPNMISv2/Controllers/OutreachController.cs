@@ -16,7 +16,12 @@ namespace RSPNMISv2.Controllers
 {
     public class OutreachController : Controller
     {
-
+        public class ImportFilesStructure {
+            string fileName { get; set; }
+            int worksheet { get; set; }
+            int[] columns { get; set; }
+        
+        }
         public ActionResult Index()
         {
             return View();
@@ -121,10 +126,16 @@ namespace RSPNMISv2.Controllers
             return View(viewModel);
         }
 
-        public ActionResult TransposedUpload(HttpPostedFileBase rspFile)
+        public ActionResult UploadDistrictDataSheet()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UploadDistrictDataSheet(HttpPostedFileBase rspFile)
         {
             // store the file inside ~/App_Data/uploads folder
-            string fileName = "book3.xlsx";
+            string fileName = "book4.xlsx";
 
             // fileName = User.Identity.Name;
             var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
@@ -148,6 +159,7 @@ namespace RSPNMISv2.Controllers
             EmptyUserCache();
             using (var package = new ExcelPackage(existingFile))
             {
+
                 // Get the work book in the file
                 var workBook = package.Workbook;
                 if (workBook != null)
@@ -163,69 +175,89 @@ namespace RSPNMISv2.Controllers
                         ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
                         var start = workSheet.Dimension.Start;
                         var end = workSheet.Dimension.End;
+                        List<string> unknownDistricts = new List<string>();
+                        decimal ruralPeriUrban, rspUcs, totalhhs, organizedhhs, cosformed, districtOffice, fieldUnits;
+                        string rspName;
 
-                        for (int row = start.Row; row <= end.Row; row++)
+                        RSPOutreach o = new RSPOutreach();
+                        o.CreatedBy = User.Identity.Name;
+                        o.DateCreated = DateTime.Today;
+                        o.DateModified = DateTime.Today;
+                        o.ModifiedBy = User.Identity.Name;
+                        o.ReportingDate = new DateTime(2014, 09, 15); ;
+                        o.IsCumulative = false ;
+                        for (int row = 5; row <= end.Row; row++)
                         { // Row by row...
-                            if (row != 1)
+                            string districtName = workSheet.Cells[row, 2].Text;
+                            if (districtName != "" && districtName != "TOTAL" && districtName != "Sub Total" && districtName != "Grand Total" && districtName != "G. Total")
                             {
-
-                                int[] indicatorId = new int[] { 1, 2, 4, 5, 39, 40, 41 };
-
-                                //   string indicatorName = workSheet.Cells[row, 1].Text;
-                                //      string subIndicatorName = workSheet.Cells[row, 2].Text;
-                                int colStartIndex = 3;
-
-                                string abbr = workSheet.Cells[row, 2].Text;
-                                string districtName = workSheet.Cells[row, 1].Text;
-
-                                // Indicator = (Indicators.Where(x => (x.IndicatorName == indicatorName) && (x.SubIndicatorName == subIndicatorName))).ToList();
-                                District = (Districts.Where(x => (x.District_Name == districtName.ToUpper()))).ToList();
-                                PartnerOrganization = (Partners.Where(x => (x.Abbr == abbr))).ToList();
-
-                                if (PartnerOrganization.Count > 0 && District.Count > 0)
+                                districtName = districtName.Replace("(overlapping)", "");
+                                districtName = districtName.Replace("(Overlapping)", "");
+                                districtName = districtName.Replace("*", "");
+                                District = (Districts.Where(x => (x.AlternateName == districtName.ToUpper().Trim()) || (x.District_Name == districtName.ToUpper().Trim()))).ToList();
+                                rspName = workSheet.Cells[row, 18].Text;
+                                PartnerOrganization = (Partners.Where(x => (x.Abbr == rspName.ToUpper()))).ToList();
+                                if (District.Count > 0)
                                 {
 
-                                    OutreachImportViewModel vm = new OutreachImportViewModel();
+                                    Decimal.TryParse(workSheet.Cells[row, 3].Text, out ruralPeriUrban);
+                                    Decimal.TryParse(workSheet.Cells[row, 5].Text, out rspUcs);
+                                    Decimal.TryParse(workSheet.Cells[row, 8].Text, out totalhhs);
+                                    Decimal.TryParse(workSheet.Cells[row, 10].Text, out organizedhhs);
+                                    Decimal.TryParse(workSheet.Cells[row, 14].Text, out cosformed);
+                                 //   districtOffice = workSheet.Cells[row, 14].Text == "Yes" ? 1 : 0;
+                                   // Decimal.TryParse(workSheet.Cells[row, 14].Text, out fieldUnits);
 
-                                    foreach (int i in indicatorId)
-                                    {
-                                        string value = workSheet.Cells[row, colStartIndex].Text;
-                                        Indicator = (Indicators.Where(x => (x.ID == i))).ToList();
+                                    o.Dist_Id = District[0].Dist_Id;
+                                    o.PartnerOrganizationID = PartnerOrganization.Count() > 0 ? PartnerOrganization[0].ID : (int?)null;
 
-                                        if (value == "Yes")
-                                            value = "1";
-                                        else if (value == "No" || value=="")
-                                            value = "0";
 
-                                        if (value != String.Empty)
-                                            vm.Value = Convert.ToDecimal(value);
-                                        else
-                                            vm.Value = null;
+                                    o.IndicatorID = 1;
+                                    o.Value = Convert.ToDecimal(ruralPeriUrban);
+                                    db.RSPOutreachs.Add(o);
+                                    db.SaveChanges();
 
-                                        vm.Dist_Id = District[0].Dist_Id;
-                                        vm.IndicatorID = i;
-                                        vm.PartnerOrganizationName = PartnerOrganization[0].Title;
-                                        vm.PartnerOrganizationId = PartnerOrganization[0].ID;
-                                        vm.ReportingDate = DateTime.UtcNow;
-                                        vm.DistrictName = districtName;
-                                        vm.Value = Convert.ToDecimal(value);
-                                        vm.IndicatorName = Indicator[0].IndicatorName;
-                                        vm.SubIndicatorName = Indicator[0].SubIndicatorName; ;
-                                        OutreachCache.Add(User.Identity.Name, vm);
-                                        colStartIndex++;
-                                    }
+
+                                    o.IndicatorID = 2;
+                                    o.Value = Convert.ToDecimal(rspUcs);
+                                    db.RSPOutreachs.Add(o);
+                                    db.SaveChanges();
+
+                                    o.IndicatorID = 4;
+                                    o.Value = Convert.ToDecimal(totalhhs);
+                                    db.RSPOutreachs.Add(o);
+                                    db.SaveChanges();
+
+
+                                    o.IndicatorID = 5;
+                                    o.Value = Convert.ToDecimal(organizedhhs);
+                                    db.RSPOutreachs.Add(o);
+                                    db.SaveChanges();
+
+
+                                    o.IndicatorID = 39;
+                                    o.Value = Convert.ToDecimal(cosformed);
+                                    db.RSPOutreachs.Add(o);
+                                    db.SaveChanges();
+
+                                    //o.IndicatorID = 40;
+                                    //o.Value = Convert.ToDecimal(districtOffice);
+                                    //db.RSPOutreachs.Add(o);
+                                    //db.SaveChanges();
+
+                                    //o.IndicatorID = 41;
+                                    //o.Value = Convert.ToDecimal(fieldUnits);
+                                    //db.RSPOutreachs.Add(o);
+                                    //db.SaveChanges();
 
                                 }
                                 else
                                 {
-                                    //exception Indicator or District Spelling mistake maybe 
+                                    unknownDistricts.Add(districtName);
                                     continue;
                                 }
-
                             }
-
                         }
-
                     }
                 }
             }
@@ -254,7 +286,7 @@ namespace RSPNMISv2.Controllers
                 o.IndicatorID = d.IndicatorID;
                 o.Dist_Id = d.Dist_Id;
                 o.Value = d.Value;
-                o.PartnerOrganizationID =d.PartnerOrganizationId;
+                o.PartnerOrganizationID = d.PartnerOrganizationId;
                 db.RSPOutreachs.Add(o);
                 db.SaveChanges();
             }
@@ -318,8 +350,6 @@ namespace RSPNMISv2.Controllers
         {
             //OutreachCache.RemoveUserData(User.Identity.Name);
             string[] districtInfo = district.Split(new[] { "$#" }, StringSplitOptions.None);
-
-
             OutreachImportViewModel vm = new OutreachImportViewModel();
             vm.Dist_Id = Convert.ToInt32(districtInfo[0]);
             vm.DistrictName = districtInfo[1];
@@ -335,7 +365,6 @@ namespace RSPNMISv2.Controllers
                 ++i;
                 OutreachCache.Add(User.Identity.Name, vm);
             }
-
             dynamic viewModel = new ExpandoObject();
             viewModel.PartnerOrganizations = DbHelpers.getPartnerOrganizations();
             viewModel.Districts = DbHelpers.getDistricts();
@@ -364,7 +393,7 @@ namespace RSPNMISv2.Controllers
             o.SubIndicatorName = model.SubIndicatorName;
             o.OrderIndex = model.OrderIndex;
             o.IsCumulative = model.IsCumulative;
-            o.showVarianceInReports = model.showVarianceInReports;
+            o.ShowVarianceInReports = model.showVarianceInReports;
             o.IsActive = true;
             db.Indicators.Add(o);
             db.SaveChanges();
@@ -663,7 +692,7 @@ namespace RSPNMISv2.Controllers
                             else
                                 value = 0;
 
-                            if (i.showVarianceInReports == true)
+                            if (i.ShowVarianceInReports == true)
                             {
 
                                 worksheet.Cells[indicatorDataRow + 3, indicatorDataCol - 2].Value = value;
@@ -697,7 +726,7 @@ namespace RSPNMISv2.Controllers
                     worksheet.Cells[indicatorHeaderRow, indicatorHeaderCol].Value = i.IndicatorName;
                     worksheet.Column(indicatorHeaderCol).AutoFit();
 
-                    if (i.showVarianceInReports == true)
+                    if (i.ShowVarianceInReports == true)
                     {
                         worksheet.Cells[indicatorHeaderRow + 1, indicatorHeaderCol].Value = "# as of " + lastMonth.ToString("MMMM") + " " + lastMonth.ToString("yyyy");
                         worksheet.Cells[indicatorHeaderRow + 1, indicatorHeaderCol + 1].Value = "% increase during " + now.ToString("MMMM") + " " + now.ToString("yyyy");
@@ -753,5 +782,9 @@ namespace RSPNMISv2.Controllers
             //return View();
         }
 
+        public ActionResult DistrictOutreach() {
+
+            return View();        
+        }
     }
 }

@@ -1,201 +1,212 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - RSPN MIS</title>
-    @*@Styles.Render("~/Content/css")*@
-    @Styles.Render("~/Content/theme")
-    @Styles.Render("~/Content/dataTable")
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - RSPN MIS</title>
+        @*@Styles.Render("~/Content/css")*@
+        @Styles.Render("~/Content/theme")
+        @Styles.Render("~/Content/dataTable")
 
 
 
 
-</head>
-<body class="nav-md">
-    <div class="container body">
+    </head>
+    <body class="nav-md">
+        <div class="container body">
 
-        <div class="main_container">
-            <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                        <a href="@Url.Action("Index","Home") " class=" site_title"><i class="fa fa-database"></i> <span>RSPN</span></a>
-                    </div>
-                    <div class="clearfix"></div>
-                    <!-- menu prile quick info -->
-                    <div class="profile">
-                        <div class="profile_pic">
-                            <img src="~/Content/Images/img.jpg" alt="..." class="img-circle profile_img">
+            <div class="main_container">
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+                        <div class="navbar nav_title" style="border: 0;">
+
+                            <a href="@Url.Action("Index","Home") " class=" site_title"><i class="fa fa-database"></i> <span>RSPN</span></a>
                         </div>
-                        <div class="profile_info">
-                            <span>Welcome,</span>
-                            <h2>Current User</h2>
+                        <div class="clearfix"></div>
+                        <!-- menu prile quick info -->
+                        <div class="profile">
+                            <div class="profile_pic">
+                                <img src="~/Content/Images/img.jpg" alt="..." class="img-circle profile_img">
+                            </div>
+                            <div class="profile_info">
+                                <span>Welcome,</span>
+                                <h2>@User.Identity.GetUserName() </h2>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /menu prile quick info -->
-                    <br />
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <h3>Management Information</h3>
-                            <ul class="nav side-menu">
-                                <li>
-                                    <a><i class="fa fa-users"></i> System Administration <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li>
-                                            @Html.ActionLink("Partner Organizations", "PartnerOrganizations", "Administration")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Sectors", "Sectors", "Administration")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Districts", "Districts", "Administration")
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-bar-chart-o"></i>Project Management <span class="fa fa-chevron-down"></span></a>
-
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-database"></i> RSP Outreach Data <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li>
-                                            @Html.ActionLink("Upload Monthly Outreach Data", "DataForm", "Outreach")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Upload Excel File", "DataUpload", "Outreach")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Reports", "Reports", "Outreach")
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("Indicators", "Indicators", "Outreach")
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-home"></i> Task Management <span class="fa fa-chevron-down"></span></a>
-
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-briefcase"></i> Field Monitoring <span class="fa fa-chevron-down"></span></a>
-
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-line-chart"></i> Activity Progress <span class="fa fa-chevron-down"></span></a>
-
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-building-o"></i> Report Collections <span class="fa fa-chevron-down"></span></a>
-
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="menu_section">
-                            <h3>Geographic Information </h3>
-                            <ul class="nav side-menu">
-                                <li>
-                                    <a><i class="fa fa-globe"></i> GIS <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li>
-                                            <a href="#">RSPN Projects</a>
-                                        </li>
-                                        <li>
-                                            @Html.ActionLink("RSP's Outreach", "Index", "Gis")
-                                        </li>
-
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /sidebar menu -->
-                    <!-- /menu footer buttons -->
-                    <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Lock">
-                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <!-- /menu footer buttons -->
-                </div>
-            </div>
-            <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <nav class="" role="navigation">
-                        <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                        </div>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/Content/Images/img.jpg" alt="">
-                                    <span class=" fa fa-angle-down"></span>
-
-                                </a>
-                                <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+                        <!-- /menu prile quick info -->
+                        <br /><br /><br /><br />        <br /><br />
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <div class="menu_section">
+                                <h3>Management Information</h3>
+                                <ul class="nav side-menu">
                                     <li>
-                                        <a href="javascript:;">  Profile</a>
+                                        <a><i class="fa fa-users"></i> System Administration <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: none">
+                                            <li>
+                                                @Html.ActionLink("Partner Organizations", "PartnerOrganizations", "Administration")
+                                            </li>
+                                            <li>
+                                                @Html.ActionLink("Sectors", "Sectors", "Administration")
+                                            </li>
+                                            <li>
+                                                @Html.ActionLink("Districts", "Districts", "Administration")
+                                            </li>
+                                            <li>
+                                                @Html.ActionLink("Create New User", "Districts", "Administration")
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li>
-                                        <a href="javascript:;">
-                                            <!-- <span class="badge bg-red pull-right">50%</span> -->
-                                            <span>Settings</span>
-                                        </a>
+                                        <a><i class="fa fa-bar-chart-o"></i>Project Management <span class="fa fa-chevron-down"></span></a>
+
                                     </li>
                                     <li>
-                                        <a href="javascript:;">Help</a>
+                                        <a><i class="fa fa-database"></i> RSP Outreach Data <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: none">
+                                            <li>
+                                                @Html.ActionLink("New District Outreach Data", "DistrictOutreach", "Outreach")
+                                            </li>
+                                            <li>
+                                                @Html.ActionLink("New Outreach Data", "DataForm", "Outreach")
+                                            </li>
+                                            <li>
+                                                @Html.ActionLink("Upload Excel File", "DataUpload", "Outreach")
+                                            </li>
+                                            @*<li>
+                                                    @Html.ActionLink("Upload District Wise Excel File", "UploadDistrictDataSheet", "Outreach")
+                                                </li>*@
+
+                                            <li>
+                                                @Html.ActionLink("Indicators", "Indicators", "Outreach")
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li>
-                                        <a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                        <a><i class="fa fa-home"></i> Task Management <span class="fa fa-chevron-down"></span></a>
+
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-briefcase"></i> Field Monitoring <span class="fa fa-chevron-down"></span></a>
+
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-line-chart"></i> Activity Progress <span class="fa fa-chevron-down"></span></a>
+
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-building-o"></i> Report Collections <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: none">
+                                            <li>
+                                                @Html.ActionLink("Outreach Reports", "Reports", "Outreach")
+                                            </li>
+
+                                        </ul>
                                     </li>
                                 </ul>
-                            </li>
+                            </div>
+                            <div class="menu_section">
+                                <h3>Geographic Information </h3>
+                                <ul class="nav side-menu">
+                                    <li>
+                                        <a><i class="fa fa-globe"></i> GIS <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: none">
+                                            <li>
+                                                @Html.ActionLink("RSPN Projects", "RspProjects", "Gis")
+                                            </li>
+                                            <li>
+                                                @Html.ActionLink("RSP's Outreach", "Index", "Gis")
+                                            </li>
 
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <!-- /top navigation -->
-            <!-- page content -->
-            <div class="right_col" role="main">
-                @RenderBody()
-
-                <footer>
-                    <div class="">
-                        <p class="pull-right">
-                            @Html.Partial("_LoginPartial")   RSPN MIS Developed and Maintained by<a href="http://www.rspn.org"> RSPN </a>. |
-                            <span class="lead"> <i class="fa fa-paw"></i> RSPN!</span>
-                        </p>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /sidebar menu -->
+                        <!-- /menu footer buttons -->
+                        <div class="sidebar-footer hidden-small">
+                            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- /menu footer buttons -->
                     </div>
-                    <div class="clearfix"></div>
-                </footer>
+                </div>
+                <!-- top navigation -->
+                <div class="top_nav">
+                    <div class="nav_menu">
+                        <nav class="" role="navigation">
+                            <div class="nav toggle">
+                                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                            </div>
+                            <ul class="nav navbar-nav navbar-right">
 
+                                <li class="">
+
+                                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+
+                                        @*<img src="~/Content/Images/img.jpg" alt="">*@
+                                        @Html.Partial("_LoginPartial")
+                                    </a>
+
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- /top navigation -->
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    @RenderBody()
+
+                    <footer>
+                        <div class="">
+                            <p class="pull-right">
+                                RSPN MIS Developed and Maintained by<a href="http://www.rspn.org"> RSPN </a>. |
+                                <span class="lead"> <i class="fa fa-paw"></i> RSPN!</span>
+                            </p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+
+                </div>
+                <!-- /page content -->
             </div>
-            <!-- /page content -->
         </div>
-    </div>
-    <div id="custom_notifications" class="custom-notifications dsp_none">
-        <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group"></ul>
-        <div class="clearfix"></div>
-        <div id="notif-group" class="tabbed_notifications"></div>
-    </div>
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/theme")
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/dataTable")
-    @RenderSection("scripts", required: false)
-</body>
+        <div id="custom_notifications" class="custom-notifications dsp_none">
+            <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group"></ul>
+            <div class="clearfix"></div>
+            <div id="notif-group" class="tabbed_notifications"></div>
+        </div>
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/theme")
+        @*@Scripts.Render("~/bundles/jquery")*@
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/dataTable")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
+
+}
+
+else
+{
+
+
+    Response.Redirect("~/Account/Login");
+
+}

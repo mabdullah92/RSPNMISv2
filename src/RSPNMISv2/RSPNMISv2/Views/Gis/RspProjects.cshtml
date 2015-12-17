@@ -1,0 +1,558 @@
+﻿@{
+    ViewBag.Title = "GIS Outreach Data";
+}
+<style>
+    .kpiTable > tbody > tr {
+        cursor: pointer;
+    }
+</style>
+
+@model dynamic
+<div id="loading" style="position:absolute; width:100%; display:none; text-align:center; top:300px; z-index:100000;">
+    <img src="">
+</div>
+
+<div class="row">
+    <div class="col-md-22 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Geographic Information System of Donor & RSP Projects / Outreach</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+                <div class="Row">
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                Select Date
+                            </label>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" id="reportingDate">
+                                    @foreach (var r in Model.ReportingDates)
+                                    {
+                                        <option value="@r.ReportingDate"> @r.ReportingMonthYear </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <br /><br />
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                Select Province / Region
+                            </label>
+
+
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                <input type="checkbox" value="Punjab" class="flat checkbox_region" checked="checked"> Punjab
+                                <input type="checkbox" value="KPK" class="flat checkbox_region" checked="checked"> KPK
+                                <input type="checkbox" value="Balochistan" class="flat checkbox_region" checked="checked"> Baluchistan
+                                <input type="checkbox" value="Sindh" class="flat checkbox_region" checked="checked"> Sindh
+                                <input type="checkbox" value="Gilgit-Baltistan" class="flat checkbox_region" checked="checked"> Gilgit-Baltistan <br />
+                                <input type="checkbox" value="A.J.K" class="flat checkbox_region" checked="checked"> Azad Kashmir
+                                <input type="checkbox" value="Islamabad" class="flat checkbox_region" checked="checked"> Islamabad
+                                <input type="checkbox" value="FATA" class="flat checkbox_region"> FATA
+                            </div>
+                        </div>
+
+                        <br /><br />
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                Select Donor
+                            </label>
+
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control">
+                                    <option>
+                                        All Donors
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                Select Implementing Partner
+                            </label>
+
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="select2_multiple form-control" id="partners" onchange="getOutreach(this);" multiple="multiple">
+
+                                    <option value="-1" selected="selected">
+                                        All Partners
+                                    </option>
+                                    @foreach (var d in Model.PartnerOrganizations)
+                                    {
+                                        <option value="@d.ID"> @d.Abbr </option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="form-group">
+
+                            <label class="control-label col-md-4 col-sm-3 col-xs-12">
+                                Select Project
+                            </label>
+
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control">
+                                    <option>
+                                        All Projects
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="trends" style="height:300px;" class="col-md-6 col-sm-12 col-lg-6">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8" style=" border: 1px dashed gray;">
+                        <div id="map" style="width: 100%;height: 900px;"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <br><br><br><br><br><br>
+                        <h2 class="kpiTable" style="display:none">--- Key Performance Indicators ---</h2>
+                        <h4 class="kpiTable" style="display:none">Selected RSPs : <b id="rsps"></b></h4>
+                        <h4 class="kpiTable" style="display:none">Selected Provinces : <b id="provinces"></b></h4>
+                        <h4 class="kpiTable" style="display:none">Selected Districts : <b id="districts"></b></h4>
+
+                        <table class="table table-striped responsive-utilities jambo_table kpiTable" style="display:none">
+                            <thead>
+                                <tr class="even pointer">
+                                    <th width="200px"> Indicator </th>
+                                    <th width="90px"> Sub Indicator </th>
+                                    <th width="50px"> Value </th>
+                                </tr>
+                            </thead>
+                            <tbody id="kpiData"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+
+    <script src="@Url.Content("~/Content/maps/districts.geojson")"></script>
+
+    <script src="http://code.highcharts.com/maps/highmaps.js" )"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
+    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-flash-1.0.3,b-html5-1.0.3,b-print-1.0.3,cr-1.2.0,fc-3.1.0,fh-3.0.0,kt-2.0.0,r-1.0.7,rr-1.0.0,sc-1.3.0,se-1.0.1/datatables.min.js"></script>
+
+    <script type="text/javascript">
+        var cntrlIsPressed = false;
+        var districts = [];
+        $(document).keydown(function (event) {
+            if (event.which == "17")
+                cntrlIsPressed = true;
+        });
+
+        $(document).keyup(function () {
+            cntrlIsPressed = false;
+        });
+
+        function getDistricts(district) {
+
+            if (cntrlIsPressed) {
+                districts.push(district);
+            }
+            else {
+                districts = [];
+                districts.push(district);
+
+            }
+
+            getKpiData();
+            return districts;
+        }
+        function getKpiData() {
+            var poId = $('#partners').val();
+            var poAbbr = $('#partners>option:selected').text();
+            var provinces = regions;
+            var reportingDate = $("#reportingDate").val();
+            $('#rsps').html(poAbbr.toString());
+            $('#provinces').html(provinces.toString());
+            $('#districts').html(districts.toString());
+
+            $.ajax({
+                url: ' @Url.Action("GisProjectData", "DataService")',
+                data: { 'districts': districts, 'Provinces': provinces, 'PoIDs': poId, 'ReportingDate': reportingDate },
+                type: "post",
+                cache: false,
+                success: function (content) {
+                    //$('#district').html(content[0].DistrictName);
+                    var html = "";
+                    var value;
+                    content.forEach(function (entry) {
+
+                        value = entry.value ? entry.value : "N/A";
+                        html += "<tr class='KpiRow' ><input type='hidden' value=" + entry.IndicatorId + "><td>" + entry.IndicatorName + "</td><td>" + entry.SubIndicatorName + "</td><td>" + value + "</td></tr>"
+                        //   console.log(entry);
+                    });
+                    $(".kpiTable").removeAttr("style");
+                    $('#kpiData').html(html);
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log("failed");
+                }
+            });
+
+        }
+
+
+        var regions = [];
+        var chart;
+        var geojson = data;
+
+
+        //Highcharts Structure Start here
+
+        var seriesData = [
+
+        {
+            allAreas: true,
+            mapData: geojson,
+            color: '#000000',
+            showInLegend: true,
+        }
+
+        ]
+
+        var chartData = {
+
+
+            title: {
+                text: 'Rural Support Programmes Network'
+            },
+            exporting: {
+                chartOptions: { // specific options for the exported image
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true
+                            }
+
+                        },
+
+                    }
+                },
+                scale: 3,
+                fallbackToExportServer: false
+            },
+            subtitle: {
+                text: 'Click on District To see Relevant Reports ( "ctrl" + Click to get Cumulative Data)'
+            },
+
+            mapNavigation: {
+                enabled: true,
+                enableDoubleClickZoomTo: true
+            },
+            legend: {
+                enabled: true
+            },
+            type: "map",
+            credits: {
+                enabled: false
+            },
+            series: seriesData,
+            plotOptions: {
+                series: {
+                    point: {
+                        events: {
+                            click: function () {
+                                getDistricts(this.code);
+                            }
+                        }
+                    }
+                },
+                map: {
+
+                    zIndex: 1,
+                    joinBy: ['District', 'code'],
+                    dataLabels: {
+                        enabled: true,
+                        color: 'black',
+                        formatter: function () {
+
+                            if (this.point.code) {
+                                return this.point.code;
+                            }
+                        },
+                        format: null,
+                        style: {
+                            fontWeight: 'bold'
+                        }
+                    },
+                    mapData: geojson,
+                    tooltip: {
+                        headerFormat: '',
+                        pointFormat: 'District : {point.code}<br>RSP : <b>{series.name}</b><br>'
+                    }
+                }
+            },
+        }
+
+
+        //Highcharts Structure End heres
+
+        function getOutreach(c) {
+            var filteredData = [];
+            $.each(data.features, function (i, v) {
+
+                if (regions.indexOf(v.properties.PROVINCE) > -1) {
+                    filteredData.push(v);
+                }
+            });
+
+            geojson = {
+                "type": "FeatureCollection",
+                "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                "features": filteredData
+            }
+
+            var partners = $('#partners').val();
+            $.ajax({
+
+                url: ' @Url.Action("RSPDistricts", "DataService")',
+                data: { 'partners': partners },
+                type: "post",
+                cache: false,
+                success: function (content) {
+                    var seriesData = [{ allAreas: true, mapData: geojson, color: '#000000', showInLegend: false }];
+                    content.forEach(function (partnerData) {
+
+                        var districtsstring = partnerData.DistrictsNames.split(",");
+
+                        var seriesComponent = {
+                            allAreas: false,
+                            name: partnerData.Rsp,
+                            zIndex: 10,
+                            color: partnerData.ColorCode,
+                            data: $.map(districtsstring, function (code) {
+                                return { code: code };
+                            })
+                        };
+
+                        seriesData.push(seriesComponent);
+                    });
+
+                    chartData.series = seriesData
+                    chartData.plotOptions.map.mapData = geojson;
+                    new $('#map').highcharts('Map', chartData);
+                    districts = [];
+                    getKpiData();
+                }
+            });
+        }
+
+
+
+
+        function drilldownData(regions) {
+
+            var filteredData = [];
+            var geojson;
+            $.each(data.features, function (i, v) {
+
+                if (regions.indexOf(v.properties.PROVINCE) > -1) {
+                    filteredData.push(v);
+                }
+            });
+
+            geojson = {
+                "type": "FeatureCollection",
+                "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                "features": filteredData
+            }
+
+
+            chartData.series = [{ allAreas: true, mapData: geojson, color: '#000000', showInLegend: false }];
+            chartData.plotOptions.map.mapData = geojson;
+            new $('#map').highcharts('Map', chartData);
+
+
+            return geojson;
+        }
+
+        $(document).ready(function () {
+            $('body').on('click', '.KpiRow', function () {
+                var poId = $('#partners').val();
+                var poAbbr = $('#partners>option:selected').text();
+                var provinces = regions;
+                var reportingDate = $("#reportingDate").val();
+                var indicatorId = $(this).children('input')[0].value;
+                $.ajax({
+
+                    url: ' @Url.Action("GetTrends", "DataService")',
+                    data: { 'IndicatorId': indicatorId, 'districts': districts, 'Provinces': provinces, 'PoIDs': poId, 'ReportingDate': reportingDate },
+                    type: "post",
+                    cache: false,
+                    success: function (content) {
+                        var trendSeriesYData = [];
+                        $(content).each(function () {
+                            trendSeriesYData.push(this.value);
+                        });
+                        var trendSeriesXData = [];
+                        $(content).each(function () {
+                            date = this.ReportingDate.substring(6, 19);
+                            var d = new Date(Number(date));
+                            locale = "en-us",
+                            mon = d.toLocaleString(locale, { month: "long" });
+                            var yr = d.getFullYear();
+                            var thisDay = mon + "," + yr + ".";
+                            trendSeriesXData.push(thisDay);
+                        });
+
+
+                        console.log(trendSeriesXData);
+                        var xAxis = {
+                            categories: trendSeriesXData,
+                            crosshair: true
+                        }
+                        var trendSeries = [{
+
+                            color: '#03586A',
+                            name: content[0].IndicatorName,
+                            data: trendSeriesYData
+
+                        },
+                        {
+                            type:'line',
+                            color: '#26B99A',
+                            name: content[0].IndicatorName,
+                            data: trendSeriesYData,
+                            enableMouseTracking: false
+
+                        }];
+
+                        $('#trends').highcharts({
+                            chart: {
+                                type: 'column',
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 10,
+                                    beta: 0,
+                                    depth: 150,
+                                    viewDistance: 15
+                                },
+
+
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            title: {
+                                text: 'Progress In The Past'
+                            },
+                            subtitle: {
+                                text: content[0].IndicatorName
+                            },
+                            legend: {
+                                enabled:false,
+                                floating: true,
+                                align: 'left',
+                                verticalAlign: 'top',
+                                y: 80,
+                                x: 100,
+                                layout: 'vertical'
+                            },
+                            xAxis: xAxis,
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Value'
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    pointPadding: 0.2,
+                                    borderWidth: 0
+                                }
+                            },
+                            series: trendSeries
+                        });
+                    }
+
+
+                });
+            });
+           
+
+            $(".select2_multiple").select2({
+                allowClear: true
+            });
+            $('.iCheck-helper').click(function () {
+                regions = [];
+                $('.checkbox_region:checked').each(function () {
+                    regions.push($(this).val());
+                });
+                drilldownData(regions);
+                $('#partners').trigger('change');
+                districts = [];
+                getKpiData();
+            });
+            $("#reportingDate").change(function () {
+                regions = [];
+                $('.checkbox_region:checked').each(function () {
+                    regions.push($(this).val());
+                });
+                drilldownData(regions);
+                $('#partners').trigger('change');
+                districts = [];
+                getKpiData();
+            });
+            $('.iCheck-helper:last').trigger('click');
+        });
+
+
+
+
+    </script>
+}
