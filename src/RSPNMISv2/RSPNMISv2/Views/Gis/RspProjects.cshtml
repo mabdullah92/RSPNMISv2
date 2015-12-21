@@ -224,7 +224,7 @@
                     content.forEach(function (entry) {
 
                         value = entry.value ? entry.value : "N/A";
-                        html += "<tr class='KpiRow' ><input type='hidden' value=" + entry.IndicatorId + "><td>" + entry.IndicatorName + "</td><td>" + entry.SubIndicatorName + "</td><td>" + value + "</td></tr>"
+                        html += "<tr class='KpiRow' ><input type='hidden' value=" + entry.IndicatorId + "><td>" + entry.IndicatorName + "</td><td>" + entry.SubIndicatorName + "</td><td>" + value.toLocaleString() + "</td></tr>"
                         //   console.log(entry);
                     });
                     $(".kpiTable").removeAttr("style");

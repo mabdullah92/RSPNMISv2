@@ -102,6 +102,15 @@ namespace RSPNMISv2.Controllers
 
             return Json(rspDistrictList);
         }
+        public JsonResult RSPDistrictList(int partnerId)
+        {
 
+            List<Array> data = new List<Array>();
+           data.Add( DbHelpers.getRspDistricts(partnerId));
+             data.Add(  DbHelpers.getIndicators(true).ToArray());
+           
+            return Json(data.ToArray());
+
+        }
     }
 }

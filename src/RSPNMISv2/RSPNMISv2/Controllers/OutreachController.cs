@@ -783,8 +783,9 @@ namespace RSPNMISv2.Controllers
         }
 
         public ActionResult DistrictOutreach() {
-
-            return View();        
+            dynamic viewModel = new ExpandoObject();
+            viewModel.PartnerOrganizations = DbHelpers.getPartnerOrganizations();
+            return View(viewModel);        
         }
     }
 }
